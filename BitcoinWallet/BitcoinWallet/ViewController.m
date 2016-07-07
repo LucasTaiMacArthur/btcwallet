@@ -25,6 +25,7 @@ BOOL password_exists = false;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    [CryptoOps generateKeyPair];
     // set up submit button
     self.submitButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.submitButton setTitle:ksubmitPasswordString

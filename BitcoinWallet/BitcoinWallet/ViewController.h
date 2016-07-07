@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#include <openssl/md5.h>
+#include "CryptoOps.h"
 
 @interface ViewController : UIViewController
 
