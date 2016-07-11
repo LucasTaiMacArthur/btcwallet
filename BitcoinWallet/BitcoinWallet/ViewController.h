@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #include <openssl/md5.h>
 #include "CryptoOps.h"
+#include "NetworkOps.h"
+#include "MainViewController.h"
 
 @interface ViewController : UIViewController
 

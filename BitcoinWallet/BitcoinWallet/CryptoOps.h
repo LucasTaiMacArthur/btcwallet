@@ -11,20 +11,16 @@
 
 #import <openssl/rand.h>
 #import <openssl/ec.h>
+#import <openssl/sha.h>
+#import <openssl/ripemd.h>
 #import <openssl/obj_mac.h>
 #import <Foundation/Foundation.h>
+#import "libbase58.h"
 
 @interface CryptoOps : NSObject
 
-typedef struct keyPair{
-    
-    unsigned char *privKey;
-    unsigned char *pubKey;
-    
-    
-} keyPair;
 
-+ (void)generateKeyPair;
++ (NSString *)generateKeyPair;
 
 @end
 
