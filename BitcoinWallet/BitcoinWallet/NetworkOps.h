@@ -11,7 +11,7 @@
 
 @interface NetworkOps : NSObject
 
-+ (void)testContactServer;
++ (NSString*)getAddressBalance:(NSString*)address;
 
 @end
 

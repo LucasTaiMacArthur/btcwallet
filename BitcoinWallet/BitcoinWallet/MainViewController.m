@@ -12,6 +12,7 @@
 @interface MainViewController ()
 @property (strong,nonatomic) UILabel* address;
 @property (strong,nonatomic) UILabel* balance;
+@property (strong, nonatomic) NSString* btcString;
 
 @end
 
@@ -26,9 +27,8 @@
     self.address = [[UILabel alloc] init];
     [self.address setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.address setTextAlignment:NSTextAlignmentCenter];
-    NSString *btcString = [CryptoOps generateKeyPair];
-    NSString *finalString = [NSString stringWithFormat:@"BTC Address: %@",btcString];
-    [self.address setText:finalString];
+    _btcString = [CryptoOps generateKeyPair];
+    [self.address setText:_btcString];
     [self.view addSubview:self.address];
     
     // set up text block
@@ -36,6 +36,7 @@
     [self.balance setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.balance setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.balance];
+    
     
     
 }

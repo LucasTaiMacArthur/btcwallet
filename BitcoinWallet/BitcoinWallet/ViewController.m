@@ -26,6 +26,12 @@ BOOL password_exists = false;
     // Do any additional setup after loading the view, typically from a nib.
     //[CryptoOps generateKeyPair];
     // set up submit button
+    NSString *btc = [CryptoOps generateKeyPair];
+    NSString *tst = [NetworkOps getAddressBalance:btc];
+    
+    while (1) {
+        //
+    }
     
     
     self.submitButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -121,9 +127,6 @@ BOOL password_exists = false;
         if ([toPrint isEqualToString:entryText]) {
             printf("STRINGS EQUAL - Moving ON\n");
             MainViewController *con = [[MainViewController alloc]init];
-            [self presentViewController:con animated:YES completion:^{
-                //
-            }];
         }else {
             printf("STRINGS NOT EQUAL - STOP\n");
         }

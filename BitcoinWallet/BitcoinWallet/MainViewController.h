@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CryptoOps.h"
+#import "NetworkOps.h"
 
 
 @interface MainViewController : UIViewController
