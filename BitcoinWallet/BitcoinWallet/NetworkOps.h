@@ -9,9 +9,12 @@
 #ifndef NetworkOps_h
 #define NetworkOps_h
 
+#import "MainViewController.h"
+
 @interface NetworkOps : NSObject
 
-+ (NSString*)getAddressBalance:(NSString*)address;
++ (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
++ (NSData*)getAddressQRCode:(NSString *)address changeWithData:(UIImageView *)data;
 
 @end
 

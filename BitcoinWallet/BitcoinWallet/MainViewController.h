@@ -15,6 +15,10 @@
 
 
 @interface MainViewController : UIViewController
+@property (strong, nonatomic) NSString* btcString;
+@property (strong, nonatomic) NSString* balString;
+@property (strong,nonatomic) UILabel* balance;
+
 
 @end
 

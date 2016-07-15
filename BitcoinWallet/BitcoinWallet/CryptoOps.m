@@ -37,23 +37,12 @@
     uint8_t pub_bufsize = i2o_ECPublicKey(bitcoinKP,NULL);
     uint8_t *ptr_pub = malloc(pub_bufsize);
     uint8_t *ptr_pub_cpy = ptr_pub;
-    int res = i2o_ECPublicKey(bitcoinKP,&ptr_pub_cpy);
+    i2o_ECPublicKey(bitcoinKP,&ptr_pub_cpy);
     printf("HEX ENCODED PUBKEY FOLLOWS\n");
     for (int x = 0; x < pub_bufsize; x++) {
         printf("%.2x",ptr_pub[x]);
     }
-    printf("\nHEX ENCODED PUBKEY ENDS\n");
-    // get private key in hex (provided pointer also moved)
-    uint8_t priv_buffsize = i2d_ECPrivateKey(bitcoinKP,NULL);
-    uint8_t *ptr_priv = malloc(priv_buffsize);
-    uint8_t *ptr_priv_cpy = ptr_priv;
-    int result = i2d_ECPrivateKey(bitcoinKP,&ptr_priv_cpy);
-    printf("HEX ENCODED PRIVKEY FOLLOWS\n");
-    for (int x = 0; x < priv_buffsize; x++) {
-        printf("%.2x",ptr_priv[x]);
-    }
-    printf("\nHEX ENCODED PRIVKEY ENDS\n");
-    
+   
     //hash the public key with sha256
     
     uint8_t *shaHash1 = malloc(SHA256_DIGEST_LENGTH);

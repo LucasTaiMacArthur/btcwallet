@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include <openssl/md5.h>
+#import <openssl/sha.h>
 #include "CryptoOps.h"
 #include "NetworkOps.h"
 #include "MainViewController.h"

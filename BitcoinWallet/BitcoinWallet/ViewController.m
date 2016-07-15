@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UIButton *submitButton;
 @property (strong, nonatomic) UILabel *notificationLabel;
 @property (strong, nonatomic) NSFileManager *fileman;
+@property (strong, nonatomic) MainViewController *con;
 
 @end
 
@@ -24,16 +25,7 @@ BOOL password_exists = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    //[CryptoOps generateKeyPair];
     // set up submit button
-    NSString *btc = [CryptoOps generateKeyPair];
-    NSString *tst = [NetworkOps getAddressBalance:btc];
-    
-    while (1) {
-        //
-    }
-    
-    
     self.submitButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.submitButton setTitle:ksubmitPasswordString
                        forState:UIControlStateNormal];
@@ -61,7 +53,6 @@ BOOL password_exists = false;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docurl = [paths objectAtIndex:0];
     NSString *fileurl = [docurl stringByAppendingString:@"/password.txt"];
-    printf("%s\n",[docurl UTF8String]);
     
     //check if a password file exists, if not, set the text accordingly
     password_exists = [self.fileman fileExistsAtPath:fileurl];
@@ -120,19 +111,23 @@ BOOL password_exists = false;
     if (password_exists){
         // get password data
         NSData *pwdData = [self.fileman contentsAtPath:fileurl];
-        NSString *toPrint = [[NSString alloc] initWithData:pwdData encoding:NSUTF8StringEncoding];
-        printf("The data at the file was %s\n",[toPrint UTF8String]);
         // check for password equality
         NSString *entryText = _entryField.text;
-        if ([toPrint isEqualToString:entryText]) {
+        const unsigned char *str = [entryText UTF8String];
+        unsigned char *d = malloc(SHA_DIGEST_LENGTH);
+        SHA(str, strlen([entryText UTF8String]), d);
+        NSData *toWrite = [NSData dataWithBytes:d length:SHA_DIGEST_LENGTH];
+        if ([pwdData isEqualToData:toWrite]) {
             printf("STRINGS EQUAL - Moving ON\n");
-            MainViewController *con = [[MainViewController alloc]init];
         }else {
             printf("STRINGS NOT EQUAL - STOP\n");
         }
     }else {
         NSString *tmp = _entryField.text;
-        NSData *toWrite = [tmp dataUsingEncoding:NSUTF8StringEncoding];
+        const unsigned char *str = [tmp UTF8String];
+        unsigned char *d = malloc(SHA_DIGEST_LENGTH);
+        SHA(str, strlen([tmp UTF8String]), d);
+        NSData *toWrite = [NSData dataWithBytes:d length:SHA_DIGEST_LENGTH];
         BOOL filecreat = [self.fileman createFileAtPath:fileurl contents:toWrite attributes:nil];
         if (filecreat) {
             printf("Success\n");
