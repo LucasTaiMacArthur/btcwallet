@@ -16,6 +16,7 @@
 
 + (NSString*)generateKeyPair {
     
+    
     // generate keypair based on bitcoin curve
     EC_KEY *bitcoinKP = EC_KEY_new_by_curve_name(NID_secp256k1);
     if (EC_KEY_generate_key(bitcoinKP)){
@@ -29,6 +30,37 @@
     }else{
         printf("generated keypair is invalid \n");
     }
+    
+    // get privkey
+    
+    
+    const BIGNUM *bn = EC_KEY_get0_private_key(bitcoinKP);
+    unsigned char *to = malloc(1000);
+    const unsigned char *oldTo = to;
+    int bnLen = BN_bn2mpi(bn, to);
+    
+    // null terminated of size bnlen-4 (as first 4 bytes are size);
+    
+    int size = ( (bnLen-4) * 2) + 1;
+    char* res = (char*)malloc(size);
+    const char* ptr = res;
+    res[size-1] = '\0';
+
+    
+    printf("BN PRIVKEY THING FOLLOWS\n");
+    for (int x = 4; x < bnLen; x++) {
+        printf("%.2x",oldTo[x]);
+        int index = (x - 4) * 2;
+        res += sprintf(res, "%.2x",oldTo[x]);
+        
+    }
+    printf("\n");
+    
+    
+    printf("res ended up being %s\n",ptr);
+    
+    
+    
     
     // print to check
     EC_KEY_print_fp(stdout, bitcoinKP,0);
@@ -115,12 +147,16 @@
     binaryBCAddr[RIPEMD160_DIGEST_LENGTH + 3] = b1;
     binaryBCAddr[RIPEMD160_DIGEST_LENGTH + 4] = lsb;
     
+    int bcSize = (RIPEMD160_DIGEST_LENGTH + 5);
+
+    
     printf("HEX ENCODED BC BINARY ADDR FOLLOWS\n");
     for (int x = 0; x < RIPEMD160_DIGEST_LENGTH + 5; x++) {
         printf("%.2x",binaryBCAddr[x]);
     }
     printf("\nHEX ENCODED BC BINARY ADDR ENDS\n");
-
+    
+    
     
     b58_sha256_impl = my_sha256;
     size_t sz = RIPEMD160_DIGEST_LENGTH + 5;
@@ -133,9 +169,24 @@
         printf("BTC ADDR: %s\n",base58);
     }
     
-    const char* finalb58 = base58;
+    printf("END");
     
-    return [NSString stringWithUTF8String:finalb58];
+    // assemble final string size = size of privkey + pubkey + , + \n + null
+    int finalSize = size + bcSize + 3;
+    char* finalString = malloc((sizeof(char) * finalSize));
+    char* finalStringPtr = finalString;
+    finalString[finalSize - 1] = '\0';
+    sprintf(finalString, "%s,%s\n",ptr,base58);
+    
+    printf(" THE FINAL STRING WAS \n %s \n",finalString);
+    
+    
+    NSString *returnString = [[NSString alloc]initWithBytes:finalStringPtr length:strlen(finalStringPtr) encoding:NSUTF8StringEncoding];
+    NSLog(@"LOL STRING %@",returnString);
+
+    
+    
+    return returnString;
 
 
     

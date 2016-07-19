@@ -12,9 +12,11 @@
 #import "MainViewController.h"
 
 @interface NetworkOps : NSObject
+@property (atomic) int threadCount;
 
 + (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
 + (NSData*)getAddressQRCode:(NSString *)address changeWithData:(UIImageView *)data;
++ (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
 
 @end
 

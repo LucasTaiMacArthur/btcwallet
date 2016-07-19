@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E5145D8C1D2ECFDD00948366 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5145D8B1D2ECFDD00948366 /* openssl.framework */; };
 		E55732F01D2EC31D00EC416A /* CryptoOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E55732EF1D2EC31D00EC416A /* CryptoOps.m */; };
+		E5789F131D3D454B009670CF /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5789F121D3D454B009670CF /* AddressManager.m */; };
 		E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E57928AB1D34486000FF77D4 /* MainViewController.m */; };
 		E5A54C9D1D342F600045E5FE /* base58.c in Sources */ = {isa = PBXBuildFile; fileRef = E5A54C9B1D342F600045E5FE /* base58.c */; };
 		E5AB5E771D2C24660034B3EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AB5E761D2C24660034B3EF /* main.m */; };
@@ -24,6 +25,8 @@
 		E5145D8B1D2ECFDD00948366 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openssl.framework; sourceTree = "<group>"; };
 		E55732EF1D2EC31D00EC416A /* CryptoOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoOps.m; sourceTree = "<group>"; };
 		E57283381D2ED117009117CC /* CryptoOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoOps.h; sourceTree = "<group>"; };
+		E5789F121D3D454B009670CF /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressManager.m; path = ../AddressManager.m; sourceTree = "<group>"; };
+		E5789F141D3D46E0009670CF /* AddressManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressManager.h; sourceTree = "<group>"; };
 		E57928AB1D34486000FF77D4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E57928AD1D34488400FF77D4 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E5A54C9B1D342F600045E5FE /* base58.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base58.c; sourceTree = "<group>"; };
@@ -73,6 +76,8 @@
 		E5AB5E741D2C24660034B3EF /* BitcoinWallet */ = {
 			isa = PBXGroup;
 			children = (
+				E5789F121D3D454B009670CF /* AddressManager.m */,
+				E5789F141D3D46E0009670CF /* AddressManager.h */,
 				E5AB5E781D2C24660034B3EF /* AppDelegate.h */,
 				E5AB5E791D2C24660034B3EF /* AppDelegate.m */,
 				E5AB5E7B1D2C24660034B3EF /* ViewController.h */,
@@ -88,9 +93,9 @@
 				E5A54C9C1D342F600045E5FE /* libbase58.h */,
 				E5EE67A61D304F5A00BEF981 /* NetworkOps.m */,
 				E5EE67A81D30650400BEF981 /* NetworkOps.h */,
-				E5145D8B1D2ECFDD00948366 /* openssl.framework */,
 				E57928AB1D34486000FF77D4 /* MainViewController.m */,
 				E57928AD1D34488400FF77D4 /* MainViewController.h */,
+				E5145D8B1D2ECFDD00948366 /* openssl.framework */,
 			);
 			path = BitcoinWallet;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 				E5AB5E7D1D2C24660034B3EF /* ViewController.m in Sources */,
 				E5AB5E7A1D2C24660034B3EF /* AppDelegate.m in Sources */,
 				E5AB5E771D2C24660034B3EF /* main.m in Sources */,
+				E5789F131D3D454B009670CF /* AddressManager.m in Sources */,
 				E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */,
 				E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */,
 				E5A54C9D1D342F600045E5FE /* base58.c in Sources */,

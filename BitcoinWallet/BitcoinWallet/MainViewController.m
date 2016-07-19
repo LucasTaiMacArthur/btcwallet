@@ -24,6 +24,18 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
+    [CryptoOps generateKeyPair];
+    
+    /*
+    AddressManager *addrman = [AddressManager globalManager];
+    //[addrman createKeyPairsWithDummyData];
+    NSDictionary *kp = [addrman getKeyPairs];
+    NSInteger tr = [NetworkOps returnBalanceFromAddresses:kp];
+    
+    printf("Final Answer is that that the balance of addrs is %lu\n",(long)tr);
+    */
+    
+    while(1) {}
     
     
     // set up text block

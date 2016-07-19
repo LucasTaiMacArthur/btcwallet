@@ -16,6 +16,7 @@
 #import <openssl/obj_mac.h>
 #import <Foundation/Foundation.h>
 #import "libbase58.h"
+#import "AddressManager.h"
 
 @interface CryptoOps : NSObject
 

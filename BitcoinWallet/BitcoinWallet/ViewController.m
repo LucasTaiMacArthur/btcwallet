@@ -130,7 +130,7 @@ BOOL password_exists = false;
         NSData *toWrite = [NSData dataWithBytes:d length:SHA_DIGEST_LENGTH];
         BOOL filecreat = [self.fileman createFileAtPath:fileurl contents:toWrite attributes:nil];
         if (filecreat) {
-            printf("Success\n");
+            printf("Success\n - Moving on");
         }else {
             printf("Failure\n");
         }
