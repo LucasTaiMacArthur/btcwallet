@@ -12,6 +12,7 @@
 #include "CryptoOps.h"
 #include "NetworkOps.h"
 #include "MainViewController.h"
+#include "PasswordManager.h"
 
 @interface ViewController : UIViewController
 

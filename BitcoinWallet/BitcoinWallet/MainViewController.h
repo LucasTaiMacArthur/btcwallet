@@ -12,12 +12,13 @@
 #import <UIKit/UIKit.h>
 #import "CryptoOps.h"
 #import "NetworkOps.h"
+#import "AddressManager.h"
+#import "AddressViewController.h"
 
+@interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@interface MainViewController : UIViewController
-@property (strong, nonatomic) NSString* btcString;
-@property (strong, nonatomic) NSString* balString;
-@property (strong,nonatomic) UILabel* balance;
+@property (atomic,strong) UITableView *mainTable;
+@property (atomic,strong) NSArray *tableData;
 
 
 @end

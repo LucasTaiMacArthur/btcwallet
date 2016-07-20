@@ -48,16 +48,8 @@ BOOL password_exists = false;
     [self.notificationLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.notificationLabel];
     
-    // Create a file manager
-    self.fileman = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docurl = [paths objectAtIndex:0];
-    NSString *fileurl = [docurl stringByAppendingString:@"/password.txt"];
-    
     //check if a password file exists, if not, set the text accordingly
-    password_exists = [self.fileman fileExistsAtPath:fileurl];
-    if (!password_exists) {
-        printf("no pw file exists, creating file\n");
+    if (![PasswordManager passwordFileExists]) {
         NSString * registerPasswordString = @"Register Password";
         [self.submitButton setTitle:registerPasswordString forState:UIControlStateNormal];
         self.notificationLabel.text = @"No Password Detected";
@@ -104,32 +96,18 @@ BOOL password_exists = false;
 }
 
 - (void)submitButtonPressed {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docurl = [paths objectAtIndex:0];
-    NSString *fileurl = [docurl stringByAppendingString:@"/password.txt"];
 
-    if (password_exists){
-        // get password data
-        NSData *pwdData = [self.fileman contentsAtPath:fileurl];
-        // check for password equality
-        NSString *entryText = _entryField.text;
-        const unsigned char *str = [entryText UTF8String];
-        unsigned char *d = malloc(SHA_DIGEST_LENGTH);
-        SHA(str, strlen([entryText UTF8String]), d);
-        NSData *toWrite = [NSData dataWithBytes:d length:SHA_DIGEST_LENGTH];
-        if ([pwdData isEqualToData:toWrite]) {
+    NSString *entryText = self.entryField.text;
+    
+    if ([PasswordManager passwordFileExists]){
+        if ([PasswordManager verifyPassword:entryText]) {
             printf("STRINGS EQUAL - Moving ON\n");
         }else {
             printf("STRINGS NOT EQUAL - STOP\n");
         }
     }else {
-        NSString *tmp = _entryField.text;
-        const unsigned char *str = [tmp UTF8String];
-        unsigned char *d = malloc(SHA_DIGEST_LENGTH);
-        SHA(str, strlen([tmp UTF8String]), d);
-        NSData *toWrite = [NSData dataWithBytes:d length:SHA_DIGEST_LENGTH];
-        BOOL filecreat = [self.fileman createFileAtPath:fileurl contents:toWrite attributes:nil];
-        if (filecreat) {
+        
+        if ([PasswordManager createPasswordFile:entryText]) {
             printf("Success\n - Moving on");
         }else {
             printf("Failure\n");
