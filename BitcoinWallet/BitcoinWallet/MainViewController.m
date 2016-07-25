@@ -11,25 +11,66 @@
 
 @implementation MainViewController
 
+static NSDictionary *contacts;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    /*
+    ContactManager *man = [ContactManager globalManager];
+    
+    printf("THE CONTACT DIR WAS: %i\n",[man contactDirectoryExists]);
 
     
-    // dummy data
-    AddressManager *addrMan = [AddressManager globalManager];
-    NSDictionary *pairDict = [addrMan getKeyPairs];
-    _tableData = [[NSArray arrayWithArray:[pairDict allValues]] retain];
+    if ([man contactDirectoryExists]){
+    }else {
+        [man createContactDirectory];
+    }
     
-    // create tableview
+    printf("THE CONTACT DIR WAS: %i\n",[man contactDirectoryExists]);
+    
+    if ([man addContact:@"Joe Joe"] && [man addContact:@"John Smith"]) {
+        printf("Both Contacts Successfully Added\n");
+    }
+    
+    
+    [man getAllContactNames];
+    
+     
+    */
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-    CGRect mainTableFrame = CGRectMake(0, 20, frameWidth, frameHeight);
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+
+    // add navigation bar
+    _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
+    _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
+    
+    // add navbar item with buttons
+    UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:@"Contacts"];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:nil];
+    staticItem.rightBarButtonItem = addButton;
+    staticItem.leftBarButtonItem = backButton;
+    [_navBar pushNavigationItem:staticItem animated:NO];
+    // add navigation bar
+    [self.view addSubview:_navBar];
+    
+    
+    // dummy data
+    ContactManager *contactMan = [ContactManager globalManager];
+    NSDictionary *pairDict = [contactMan getAllContactNames];
+    contacts = pairDict;
+    _tableData = [[NSArray arrayWithArray:[pairDict allKeys]] retain];
+    
+    // create tableview
+    CGRect mainTableFrame = CGRectMake(0, 64, frameWidth, frameHeight-64);
     _mainTable = [[UITableView alloc]initWithFrame:mainTableFrame style:UITableViewStylePlain];
     [_mainTable setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_mainTable setDelegate:self];
     [_mainTable setDataSource:self];
+    _mainTable.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     [self.view addSubview:_mainTable];
     
 }
@@ -39,16 +80,22 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *bitcoinCellIdentifier = @"BitcoinCell";
-    UITableViewCell *addressCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bitcoinCellIdentifier];
-    addressCell.textLabel.text = [_tableData objectAtIndex:indexPath.row];
-    return addressCell;
+    static NSString *contactCellIdent = @"contactCell";
+    UITableViewCell *contactCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contactCellIdent];
+    contactCell.textLabel.text = [_tableData objectAtIndex:indexPath.row];
+    
+    
+    
+    // check in dict if
+    
+    return contactCell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AddressViewController *itemController = [[AddressViewController alloc] init];
-    itemController.bitcoinAddress = @"LOL";
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    
 }
+
+
 
 
 

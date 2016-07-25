@@ -15,7 +15,7 @@
 @property (atomic) int threadCount;
 
 + (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
-+ (NSData*)getAddressQRCode:(NSString *)address changeWithData:(UIImageView *)data;
++ (NSData*)getAddressQRCode:(NSString *)address;
 + (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
 
 @end

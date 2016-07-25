@@ -14,12 +14,13 @@
 #import "NetworkOps.h"
 #import "AddressManager.h"
 #import "AddressViewController.h"
+#import "ContactManager.h"
 
 @interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (atomic,strong) UITableView *mainTable;
 @property (atomic,strong) NSArray *tableData;
-
+@property (strong,atomic) UINavigationBar *navBar;
 
 @end
 

@@ -1,0 +1,164 @@
+//
+//  MenuViewController.m
+//  BitcoinWallet
+//
+//  Created by Lucas Tai-MacArthur on 7/22/16.
+//
+//
+
+#import <Foundation/Foundation.h>
+#import "MenuViewController.h"
+
+@implementation MenuViewController
+
+static NSString *kMakePaymentString = @"Make Payment\n\nBalance: 0.00BTC";
+static NSString *kAddressesButtonString = @"My\nAddresses";
+static NSString *kContactsButtonString = @"My\nContacts";
+static NSString *kTransactionsButtonString = @"Past Transactions";
+
+
+
+
+- (void)viewDidLoad {
+    
+    self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
+    
+    self.makePaymentButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.makePaymentButton.layer.borderWidth = 1;
+    self.makePaymentButton.layer.cornerRadius = 15;
+    self.makePaymentButton.clipsToBounds = TRUE;
+
+    self.makePaymentButton.backgroundColor = [UIColor colorWithRed:(0x87/255.0f) green:(0xd3/255.0f) blue:(0x7c/255.0f) alpha:1.0];
+    [self.makePaymentButton setTitle:kMakePaymentString
+                       forState:UIControlStateNormal];
+    [self.makePaymentButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.makePaymentButton addTarget:self
+                          action:@selector(paymentButtonPressed)
+                forControlEvents:UIControlEventTouchUpInside];
+    [self.makePaymentButton sizeToFit];
+    self.makePaymentButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.makePaymentButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.makePaymentButton.titleLabel.textColor = [UIColor blackColor];
+    self.makePaymentButton.titleLabel.adjustsFontSizeToFitWidth = TRUE;
+    [self.view addSubview:self.makePaymentButton];
+    
+    self.myAddressesButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.myAddressesButton.layer.borderWidth = 1;
+    self.myAddressesButton.layer.cornerRadius = 15;
+    self.myAddressesButton.clipsToBounds = TRUE;
+
+    self.myAddressesButton.backgroundColor = [UIColor colorWithRed:(0xf1/255.0f) green:(0xa9/255.0f) blue:(0xa0/255.0f) alpha:1.0];
+    self.myAddressesButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.myAddressesButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.myAddressesButton setTitle:kAddressesButtonString
+                            forState:UIControlStateNormal];
+    [self.myAddressesButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.myAddressesButton addTarget:self
+                               action:@selector(paymentButtonPressed)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.myAddressesButton];
+    
+    self.myContactsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.myContactsButton.layer.borderWidth = 1;
+    self.myContactsButton.layer.cornerRadius = 15;
+    self.myContactsButton.clipsToBounds = TRUE;
+
+    self.myContactsButton.backgroundColor = [UIColor colorWithRed:(0xf5/255.0f) green:(0xd7/255.0f) blue:(0x6e/255.0f) alpha:1.0];
+    [self.myContactsButton setTitle:kContactsButtonString
+                            forState:UIControlStateNormal];
+    self.myContactsButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.myContactsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.myContactsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.myContactsButton addTarget:self
+                               action:@selector(paymentButtonPressed)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.myContactsButton];
+    
+    self.myTransactionsButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.myTransactionsButton.layer.borderWidth = 1;
+    self.myTransactionsButton.layer.cornerRadius = 15;
+    self.myTransactionsButton.clipsToBounds = TRUE;
+    self.myTransactionsButton.backgroundColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
+    [self.myTransactionsButton setTitle:kTransactionsButtonString
+                            forState:UIControlStateNormal];
+    [self.myTransactionsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.myTransactionsButton addTarget:self
+                               action:@selector(paymentButtonPressed)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.myTransactionsButton];
+    
+    
+    
+    // set platform agnostic constraints
+    NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
+    NSDictionary *views = @{ @"paymentButton"   : self.makePaymentButton,
+                             @"contactsButton" : self.myContactsButton,
+                             @"addressesButton" : self.myAddressesButton,
+                             @"transactionsButton" : self.myTransactionsButton
+                             };
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-350-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[paymentButton]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[contactsButton]-200-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-193-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[addressesButton]-200-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-193-[addressesButton]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-475-[transactionsButton]-100-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[transactionsButton]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    
+    
+    dispatch_queue_t balanceQueue = dispatch_queue_create("Balance Queue",NULL);
+    
+    dispatch_async(balanceQueue, ^{
+        // get addresses
+        NSDictionary *addresses = [[AddressManager globalManager] getKeyPairs];
+        // get the integer (there are 100mil satoshi to a bitcoin)
+        NSUInteger balanceInSatoshi = [NetworkOps returnBalanceFromAddresses:addresses];
+        double balanceInBTC = (balanceInSatoshi / 100000000.0f);
+        // update the string
+        kMakePaymentString = [NSString stringWithFormat:@"Make Payment\n\nBalance: %.2fBTC",balanceInBTC];
+        // update the view hierarchy
+        [self.makePaymentButton setTitle:kMakePaymentString forState:UIControlStateNormal];
+        [self.makePaymentButton setNeedsDisplay];
+    });
+
+
+    
+    
+}
+
+- (void)paymentButtonPressed {
+    printf("Payment Button Pressed\n");
+}
+
+@end

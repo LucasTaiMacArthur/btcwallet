@@ -55,21 +55,26 @@
 
 
 
-+ (NSData *)getAddressQRCode: (NSString *)address changeWithData:(UIImageView *)img  {
++ (NSData *)getAddressQRCode: (NSString *)address  {
     
-    NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&size=200x200",address];
+    NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&size=300x300",address];
     NSURL *url = [NSURL URLWithString:apiCall];
     __block NSData *to_ret = [[NSData alloc] init];
+    __block bool returned = FALSE;
     
     NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if(data){
             printf("Recieved image data back from qrserver\n");
-            UIImage *toPut = [[UIImage alloc]initWithData:data];
-            img.image = toPut;
+            to_ret = [data retain];
+            returned = TRUE;
         }
     }
                                  ];
     [tsk resume];
+    
+    while (!returned) {
+        // busy wait
+    }
     
     
     
