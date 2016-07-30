@@ -17,6 +17,10 @@
 @property (strong,atomic) UIImageView *qrImage;
 @property (strong,atomic) UILabel *nameLabel;
 @property (strong,nonatomic) NSString *name;
+@property (strong,nonatomic) NSString *qrCode;
+
++ (id)initWithName:(NSString*)nameStr andAddress:(NSString*)qrStr;
+
 
 @end
 

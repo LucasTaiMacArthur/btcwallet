@@ -8,13 +8,19 @@
 
 #ifndef AddressViewController_h
 #define AddressViewController_h
-
+#import "NetworkOps.h"
 #import <UIKit/UIKit.h>
 
 @interface AddressViewController : UIViewController
 
-@property(nonatomic,strong) NSString* bitcoinAddress;
-@property(nonatomic,strong) UILabel* balanceLabel;
+@property (strong,atomic) UINavigationBar *navBar;
+@property (strong,atomic) UIImageView *qrImage;
+@property (strong,atomic) UILabel *nameLabel;
+@property (strong,nonatomic) NSString *addressName;
+@property (strong,nonatomic) NSString *address;
+
++ (id)initWithName:(NSString*)name andAddress:(NSString*)address;
+
 
 @end
 

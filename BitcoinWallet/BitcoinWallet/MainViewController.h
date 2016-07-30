@@ -15,6 +15,8 @@
 #import "AddressManager.h"
 #import "AddressViewController.h"
 #import "ContactManager.h"
+#import "CreateContactViewController.h"
+#import "ContactViewController.h"
 
 @interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

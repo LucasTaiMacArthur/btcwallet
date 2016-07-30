@@ -33,7 +33,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                        forState:UIControlStateNormal];
     [self.makePaymentButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.makePaymentButton addTarget:self
-                          action:@selector(paymentButtonPressed)
+                          action:@selector(transationButtonPressed)
                 forControlEvents:UIControlEventTouchUpInside];
     [self.makePaymentButton sizeToFit];
     self.makePaymentButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -54,7 +54,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                             forState:UIControlStateNormal];
     [self.myAddressesButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myAddressesButton addTarget:self
-                               action:@selector(paymentButtonPressed)
+                               action:@selector(addressButtonPressed)
                      forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myAddressesButton];
     
@@ -70,7 +70,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     self.myContactsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.myContactsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myContactsButton addTarget:self
-                               action:@selector(paymentButtonPressed)
+                               action:@selector(contactButtonPressed)
                      forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myContactsButton];
     
@@ -157,8 +157,31 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     
 }
 
-- (void)paymentButtonPressed {
-    printf("Payment Button Pressed\n");
+- (void)addressButtonPressed {
+    AddressListView *addrViewCon = [[[AddressListView alloc] init] retain];
+    [addrViewCon setModalPresentationStyle:UIModalPresentationFullScreen];
+    [addrViewCon setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:addrViewCon animated:YES completion:^{
+        // nada
+    }];
+}
+
+- (void)contactButtonPressed {
+    MainViewController *contactVC = [[[MainViewController alloc] init] retain];
+    [contactVC setModalPresentationStyle:UIModalPresentationFullScreen];
+    [contactVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:contactVC animated:YES completion:^{
+        // nada
+    }];
+}
+
+- (void)transationButtonPressed {
+    SendTransactionViewController *contactVC = [[[SendTransactionViewController alloc] init] retain];
+    [contactVC setModalPresentationStyle:UIModalPresentationFullScreen];
+    [contactVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:contactVC animated:YES completion:^{
+        // nada
+    }];
 }
 
 @end

@@ -10,12 +10,9 @@
 #define ContactManager_h
 
 @interface ContactManager : NSObject
-- (int)createContactDirectory;
-- (int)contactDirectoryExists;
 + (id)globalManager;
-- (NSString*)createIndividualContact:(NSString*)name;
-- (int)addContact:(NSString*)name;
-- (NSDictionary*)getAllContactNames;
+- (int)addKeyPair:(NSString*)toAdd;
+- (NSDictionary*)getKeyPairs;
 @end
 
 

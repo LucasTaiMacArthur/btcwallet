@@ -12,6 +12,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AddressManager.h"
 #import "NetworkOps.h"
+#import "AddressListView.h"
+#import "APINetworkOps.h"
+#import "SendTransactionViewController.h"
 
 @interface MenuViewController : UIViewController
 

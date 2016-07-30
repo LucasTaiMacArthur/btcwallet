@@ -11,16 +11,22 @@
 
 @implementation ContactViewController
 
+
++ (id)initWithName:(NSString*)nameStr andAddress:(NSString*)qrStr {
+    ContactViewController *cvc = [[ContactViewController alloc] init];
+    cvc.name = nameStr;
+    cvc.qrCode = qrStr;
+    return cvc;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-    
-    // get name from bundle
-    _name = @"John Smith";
 
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
@@ -28,7 +34,7 @@
     // add navbar item with buttons
     
     UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:_name];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:nil];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     staticItem.leftBarButtonItem = backButton;
     [_navBar pushNavigationItem:staticItem animated:NO];
     // add navigation bar
@@ -63,7 +69,7 @@
     
     dispatch_async(balanceQueue, ^{
         // get the image data
-        NSData *imageData = [NetworkOps getAddressQRCode:@"HELLO"];
+        NSData *imageData = [NetworkOps getAddressQRCode:_qrCode];
         // set image
         UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
         [_qrImage setImage:toAdd];
@@ -75,6 +81,12 @@
 
     
     
+}
+
+- (void)backButtonPressed {
+    [self dismissViewControllerAnimated:TRUE completion:^{
+        // nil
+    }];
 }
 
 @end

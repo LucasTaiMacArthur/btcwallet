@@ -14,8 +14,11 @@
 
 + (id)globalManager;
 - (NSDictionary*)getKeyPairs;
+- (NSDictionary*)getKeyTagMapping;
 - (void)createKeyPairsWithDummyData;
-- (int)addKeyPair:(NSString*) toAdd;
+- (int)addKeyPair:(NSString*) toAdd withTag:(NSString*)keypairTagName;
+- (NSDictionary*)getTagPrivateKeyMapping;
+- (NSDictionary*)getTagToHexEncodedPubKeyMap;
 
 @end
 
