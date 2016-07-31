@@ -13,6 +13,9 @@
 @interface TransactionManager : NSObject
 
 + (id)globalManager;
+- (void)createKeyPairsWithDummyData;
+- (int)addTransHash:(NSString*)toAdd;
+- (NSSet*)getTransactionHashes;
 
 @end
 

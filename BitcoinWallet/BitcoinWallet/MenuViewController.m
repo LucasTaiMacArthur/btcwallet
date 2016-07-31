@@ -83,7 +83,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                             forState:UIControlStateNormal];
     [self.myTransactionsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myTransactionsButton addTarget:self
-                               action:@selector(paymentButtonPressed)
+                               action:@selector(transactionListButtonPressed)
                      forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myTransactionsButton];
     
@@ -177,6 +177,15 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
 
 - (void)transationButtonPressed {
     SendTransactionViewController *contactVC = [[[SendTransactionViewController alloc] init] retain];
+    [contactVC setModalPresentationStyle:UIModalPresentationFullScreen];
+    [contactVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:contactVC animated:YES completion:^{
+        // nada
+    }];
+}
+
+- (void)transactionListButtonPressed {
+    TransactionListViewController *contactVC = [[[TransactionListViewController alloc] init] retain];
     [contactVC setModalPresentationStyle:UIModalPresentationFullScreen];
     [contactVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:contactVC animated:YES completion:^{

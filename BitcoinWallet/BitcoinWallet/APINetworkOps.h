@@ -18,6 +18,7 @@
 + (NSData*)generatePartialTXWithInput:(NSString*)input andOutput:(NSString*)output andValue:(NSNumber*)val;
 + (NSString*)sendCompletedTransaction:(NSData*)transactionData forAddress:(NSString*)addressName;
 + (NSString*)getTXSkeletonWithData:(NSData*)jsonSkeleton;
++ (NSDictionary*)getTXHashInfo:(NSString*)hash;
 
 @end
 

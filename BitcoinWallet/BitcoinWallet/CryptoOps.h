@@ -12,9 +12,15 @@
 #import <Foundation/Foundation.h>
 #import "libbase58.h"
 #import "AddressManager.h"
+#import <CoreBitcoin/CoreBitcoin.h>
+
 
 
 @interface CryptoOps : NSObject
+
++ (NSString*)signData:(NSString*)privBytes withAddress:(NSString*)tag;
+
+
 
 
 

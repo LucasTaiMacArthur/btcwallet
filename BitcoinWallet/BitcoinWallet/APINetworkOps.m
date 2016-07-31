@@ -126,7 +126,7 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
 
 + (NSString*)sendCompletedTransaction:(NSData*)transactionData forAddress:(NSString*)addressName {
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/bcy/test3/txs/send?token=%@",apiAccessToken];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/txs/send?token=%@",apiAccessToken];
     NSURL *apiURL =  [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:apiURL];
     
@@ -148,7 +148,7 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
     NSMutableDictionary *partialTX = (NSMutableDictionary*)[NSJSONSerialization JSONObjectWithData:transactionData options:NSJSONReadingMutableContainers error:nil];
     NSArray *toSignArr = [partialTX objectForKey:@"tosign"];
     for (NSString *unsignedHash in toSignArr) {
-        NSString *signedHash = [CryptoOps signDataWithPrivateKey:[unsignedHash dataUsingEncoding:NSUTF8StringEncoding] forAddress:addressName];
+        NSString *signedHash = [CryptoOps signData:unsignedHash withAddress:addressName];
         printf("The hash signed was %s\n",[signedHash UTF8String]);
         [orderedSignedHashes addObject:signedHash];
         
@@ -186,6 +186,68 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
     }];
     
     [tsk resume];
+    
+    return retVal;
+    
+}
+
++ (NSString*)getTXHashInfo:(NSString*)hash {
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/txs/%@",hash];
+    NSURL *apiURL =  [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:apiURL];
+    [request setHTTPMethod:@"GET"];
+    __block NSDictionary* retVal = nil;
+    
+    
+    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        printf("data returned\n");
+        NSError *err;
+        NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
+        if (err){
+            printf("error\n");
+        } else {
+            retVal = jsonData;
+        }
+        
+        
+    }];
+    
+    [tsk resume];
+    
+    while (retVal == nil) {}
+    
+    return retVal;
+    
+}
+
++ (NSString*)scanTXFor:(NSString*)hash {
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/txs/%@",hash];
+    NSURL *apiURL =  [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:apiURL];
+    [request setHTTPMethod:@"GET"];
+    __block NSDictionary* retVal = nil;
+    
+    
+    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        printf("data returned\n");
+        NSError *err;
+        NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
+        if (err){
+            printf("error\n");
+        } else {
+            retVal = jsonData;
+        }
+        
+        
+    }];
+    
+    [tsk resume];
+    
+    while (retVal == nil) {}
     
     return retVal;
     

@@ -9,12 +9,14 @@
 #ifndef MenuViewController_h
 #define MenuViewController_h
 #import <UIKit/UIKit.h>
+#import <CoreBitcoin/CoreBitcoin.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AddressManager.h"
 #import "NetworkOps.h"
 #import "AddressListView.h"
 #import "APINetworkOps.h"
 #import "SendTransactionViewController.h"
+#import "TransactionListViewController.h"
 
 @interface MenuViewController : UIViewController
 
