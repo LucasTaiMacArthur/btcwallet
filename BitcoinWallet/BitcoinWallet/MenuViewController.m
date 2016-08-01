@@ -20,7 +20,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
 
 
 - (void)viewDidLoad {
-    
+        
     self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     
     self.makePaymentButton = [UIButton buttonWithType:UIButtonTypeSystem];

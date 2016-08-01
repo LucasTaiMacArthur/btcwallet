@@ -180,6 +180,8 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
         NSString *stringreturned = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         printf("\ndata was %s\n",[stringreturned UTF8String]);
         
+        retVal = [stringreturned retain];
+        
         
         
         
@@ -187,11 +189,13 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
     
     [tsk resume];
     
+    while (retVal == nil) {}
+    
     return retVal;
     
 }
 
-+ (NSString*)getTXHashInfo:(NSString*)hash {
++ (NSDictionary*)getTXHashInfo:(NSString*)hash {
     
     NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/txs/%@",hash];
     NSURL *apiURL =  [NSURL URLWithString:urlString];
@@ -207,6 +211,7 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
         NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
         if (err){
             printf("error\n");
+            retVal = [[NSDictionary alloc]init];
         } else {
             retVal = jsonData;
         }

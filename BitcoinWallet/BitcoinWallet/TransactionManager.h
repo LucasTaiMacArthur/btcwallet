@@ -15,7 +15,10 @@
 + (id)globalManager;
 - (void)createKeyPairsWithDummyData;
 - (int)addTransHash:(NSString*)toAdd;
-- (NSSet*)getTransactionHashes;
+- (NSDictionary*)getTransHashToContactMap;
+- (NSDictionary*)getTransHashToAddressMap;
+- (NSSet*)getTransactionSet;
+
 
 @end
 

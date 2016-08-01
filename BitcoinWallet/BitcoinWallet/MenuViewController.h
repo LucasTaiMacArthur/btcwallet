@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AddressManager.h"
 #import "NetworkOps.h"
+#import "TransactionManager.h"
 #import "AddressListView.h"
 #import "APINetworkOps.h"
 #import "SendTransactionViewController.h"

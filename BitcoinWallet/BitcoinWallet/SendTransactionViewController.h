@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "ContactManager.h"
 #import "AddressManager.h"
+#import "TransactionManager.h"
 #import "APINetworkOps.h"
 #import "CryptoOps.h"
 

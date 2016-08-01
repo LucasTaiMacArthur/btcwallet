@@ -59,16 +59,18 @@
     
     // set up text block
     self.btcLabel = [[UILabel alloc] init];
-    self.btcLabel.text = @"I want to send";
+    self.btcLabel.text = @"TO";
+    self.btcLabel.font = [UIFont systemFontOfSize:25];
     [self.btcLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.btcLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.btcLabel setTextAlignment:NSTextAlignmentLeft];
     [self.view addSubview:self.btcLabel];
     
     // set up text block
     self.toLabel = [[UILabel alloc] init];
-    self.toLabel.text = @"BTC from";
+    self.toLabel.text = @"FROM";
+    self.toLabel.font = [UIFont systemFontOfSize:25];
     [self.toLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.toLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.toLabel setTextAlignment:NSTextAlignmentLeft];
     [self.view addSubview:self.toLabel];
     
     // set up the contact spinner
@@ -102,20 +104,18 @@
                              @"address" : self.addressPicker
                              };
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[btc]-30-[amount]-20-[to]-20-[contact]-25-[address]-100-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[btc][contact]"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[amount]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[contact]-10-[to][address][amount]"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
+    
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[btc]-50-|"
-                                                                      options:0
-                                                                      metrics:metrics
-                                                                        views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[to]-50-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
@@ -123,7 +123,15 @@
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[to]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[address]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[amount]-50-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
@@ -151,7 +159,32 @@
         
         NSData *dataToSign = [[partialTx dataUsingEncoding:NSUTF8StringEncoding] retain];
         
-        [APINetworkOps sendCompletedTransaction:dataToSign forAddress:pickerAddress];
+        NSString* returnedData = [APINetworkOps sendCompletedTransaction:dataToSign forAddress:pickerAddress];
+        
+        NSData *dataFromString = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+        
+        //  create the json object
+        NSDictionary *finalTX = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:dataFromString options:0 error:nil];
+        
+        // error check (literally check for errors in the resturned object
+        if ( [finalTX objectForKey:@"errors"]) {
+            // if errors, fail quiet *for now*
+            return;
+        
+        } else {
+            // else if no errors, assume correct names from input
+            NSString *pt1 = [NSString stringWithFormat:@"%@,%@,",pickerAddress,pickerContact];
+            // now get the hash from /tx/hash->string
+            NSDictionary *tx = [finalTX objectForKey:@"tx"];
+            NSString *txHash = [tx objectForKey:@"hash"];
+            
+            // create transaction with format TO,FROM,HASH
+            NSString *finalTxString = [NSString stringWithFormat:@"%@%@\n",pt1,txHash];
+        
+            // create a transaction + add it to the trans controller
+            TransactionManager *txMan = [TransactionManager globalManager];
+            [txMan addTransHash:finalTxString];
+        }
         
         
     }];
@@ -184,7 +217,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
     if (component == 0) {
-        return 50;
+        return 30;
     }else {
         return 0;
     }
@@ -192,7 +225,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     if (component == 0) {
-        return 200;
+        return 150;
     } else {
         return 0;
     }
