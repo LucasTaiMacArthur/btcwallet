@@ -10,7 +10,6 @@
 		E50AF2141D42C1D600D20AB2 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2131D42C1D600D20AB2 /* ContactManager.m */; };
 		E50AF2171D42C85700D20AB2 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2161D42C85700D20AB2 /* ContactViewController.m */; };
 		E50AF21A1D42CC0C00D20AB2 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */; };
-		E5145D8C1D2ECFDD00948366 /* openssl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5145D8B1D2ECFDD00948366 /* openssl.framework */; };
 		E54B04101D3FE971001727E0 /* PasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E54B040F1D3FE971001727E0 /* PasswordManager.m */; };
 		E55275221D442EBD002F241B /* BitcoinContact.m in Sources */ = {isa = PBXBuildFile; fileRef = E55275211D442EBD002F241B /* BitcoinContact.m */; };
 		E55275251D45431E002F241B /* BitcoinTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = E55275241D45431E002F241B /* BitcoinTransaction.m */; };
@@ -46,7 +45,6 @@
 		E50AF2181D42C8B700D20AB2 /* ContactViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
 		E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E50AF21B1D42CC2400D20AB2 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
-		E5145D8B1D2ECFDD00948366 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = openssl.framework; sourceTree = "<group>"; };
 		E54B040F1D3FE971001727E0 /* PasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordManager.m; sourceTree = "<group>"; };
 		E54B04111D3FE97D001727E0 /* PasswordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordManager.h; sourceTree = "<group>"; };
 		E55275211D442EBD002F241B /* BitcoinContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitcoinContact.m; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5145D8C1D2ECFDD00948366 /* openssl.framework in Frameworks */,
 				F980F2367CFAA780EA3A38E3 /* libPods-BitcoinWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,7 +168,6 @@
 				E5EE67A81D30650400BEF981 /* NetworkOps.h */,
 				E57928AB1D34486000FF77D4 /* MainViewController.m */,
 				E57928AD1D34488400FF77D4 /* MainViewController.h */,
-				E5145D8B1D2ECFDD00948366 /* openssl.framework */,
 				E54B040F1D3FE971001727E0 /* PasswordManager.m */,
 				E54B04111D3FE97D001727E0 /* PasswordManager.h */,
 				E5C32C291D402CF40020486B /* AddressViewController.m */,
