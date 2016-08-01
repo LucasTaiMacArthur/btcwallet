@@ -10,8 +10,6 @@
 #import <Foundation/Foundation.h>
 #include <stdio.h>
 #include <string.h>
-#include <openssl/evp.h>
-
 
 
 @implementation CryptoOps
@@ -32,11 +30,15 @@
     // this needs a char to hex conversion
     // each 2 chars should be interpreted as a byte
     
-    
+    #ifndef WINOBJC
     BTCKey *transactionPkey = [[BTCKey alloc]initWithPrivateKey:privkeyAsBytes];
-    
-    NSData *signedHash = [transactionPkey signatureForHash:correctedPrivBytes];
-    
+    #endif
+
+	NSData *signedHash;
+
+	#ifndef WINOBJC
+    signedHash = [transactionPkey signatureForHash:correctedPrivBytes];
+    #endif
     // concat into a c string, then into a NSString
     
     NSString *signedHasAsString = [self dataToHexEncodedString:signedHash];

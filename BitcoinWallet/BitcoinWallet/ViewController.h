@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#ifndef WINOBJC
 #include <openssl/md5.h>
 #import <openssl/sha.h>
+#endif
+
 #include "CryptoOps.h"
 #include "NetworkOps.h"
 #include "MainViewController.h"
