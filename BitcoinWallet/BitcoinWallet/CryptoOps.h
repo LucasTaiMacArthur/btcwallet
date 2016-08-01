@@ -10,7 +10,6 @@
 #define CryptoOps_h
 
 #import <Foundation/Foundation.h>
-#import "libbase58.h"
 #import "AddressManager.h"
 
 #ifndef WINOBJC
