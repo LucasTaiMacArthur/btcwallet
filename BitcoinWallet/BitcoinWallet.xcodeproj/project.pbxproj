@@ -11,9 +11,6 @@
 		E50AF2171D42C85700D20AB2 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2161D42C85700D20AB2 /* ContactViewController.m */; };
 		E50AF21A1D42CC0C00D20AB2 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */; };
 		E54B04101D3FE971001727E0 /* PasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E54B040F1D3FE971001727E0 /* PasswordManager.m */; };
-		E55275221D442EBD002F241B /* BitcoinContact.m in Sources */ = {isa = PBXBuildFile; fileRef = E55275211D442EBD002F241B /* BitcoinContact.m */; };
-		E55275251D45431E002F241B /* BitcoinTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = E55275241D45431E002F241B /* BitcoinTransaction.m */; };
-		E552F3911D44003D00574166 /* MainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E552F3901D44003D00574166 /* MainPageViewController.m */; };
 		E55732F01D2EC31D00EC416A /* CryptoOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E55732EF1D2EC31D00EC416A /* CryptoOps.m */; };
 		E5789F131D3D454B009670CF /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5789F121D3D454B009670CF /* AddressManager.m */; };
 		E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E57928AB1D34486000FF77D4 /* MainViewController.m */; };
@@ -47,12 +44,6 @@
 		E50AF21B1D42CC2400D20AB2 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E54B040F1D3FE971001727E0 /* PasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordManager.m; sourceTree = "<group>"; };
 		E54B04111D3FE97D001727E0 /* PasswordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordManager.h; sourceTree = "<group>"; };
-		E55275211D442EBD002F241B /* BitcoinContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitcoinContact.m; sourceTree = "<group>"; };
-		E55275231D442F4B002F241B /* BitcoinContact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitcoinContact.h; sourceTree = "<group>"; };
-		E55275241D45431E002F241B /* BitcoinTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitcoinTransaction.m; sourceTree = "<group>"; };
-		E55275261D45432A002F241B /* BitcoinTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitcoinTransaction.h; sourceTree = "<group>"; };
-		E552F3901D44003D00574166 /* MainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainPageViewController.m; sourceTree = "<group>"; };
-		E552F3921D44004700574166 /* MainPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainPageViewController.h; sourceTree = "<group>"; };
 		E55732EF1D2EC31D00EC416A /* CryptoOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoOps.m; sourceTree = "<group>"; };
 		E57283381D2ED117009117CC /* CryptoOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoOps.h; sourceTree = "<group>"; };
 		E5789F121D3D454B009670CF /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressManager.m; path = ../AddressManager.m; sourceTree = "<group>"; };
@@ -60,11 +51,9 @@
 		E57928AB1D34486000FF77D4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E57928AD1D34488400FF77D4 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E580F49C1D492DDC00500780 /* APINetworkOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APINetworkOps.m; sourceTree = "<group>"; };
-		E580F49E1D49306000500780 /* AddressModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
 		E580F49F1D49309600500780 /* APINetworkOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APINetworkOps.h; sourceTree = "<group>"; };
 		E58869AF1D4D78B6005663CC /* TransactionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionListViewController.m; sourceTree = "<group>"; };
 		E58869B11D4D78C7005663CC /* TransactionListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransactionListViewController.h; sourceTree = "<group>"; };
-		E5A54C9C1D342F600045E5FE /* libbase58.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libbase58.h; sourceTree = "<group>"; };
 		E5AB5E721D2C24660034B3EF /* BitcoinWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitcoinWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AB5E761D2C24660034B3EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E5AB5E781D2C24660034B3EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -160,10 +149,8 @@
 				E5AB5E751D2C24660034B3EF /* Supporting Files */,
 				E580F49C1D492DDC00500780 /* APINetworkOps.m */,
 				E580F49F1D49309600500780 /* APINetworkOps.h */,
-				E580F49E1D49306000500780 /* AddressModel.h */,
 				E55732EF1D2EC31D00EC416A /* CryptoOps.m */,
 				E57283381D2ED117009117CC /* CryptoOps.h */,
-				E5A54C9C1D342F600045E5FE /* libbase58.h */,
 				E5EE67A61D304F5A00BEF981 /* NetworkOps.m */,
 				E5EE67A81D30650400BEF981 /* NetworkOps.h */,
 				E57928AB1D34486000FF77D4 /* MainViewController.m */,
@@ -180,12 +167,6 @@
 				E5E6945D1D42D9760055469B /* BalanceViewController.h */,
 				E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */,
 				E50AF21B1D42CC2400D20AB2 /* MenuViewController.h */,
-				E55275211D442EBD002F241B /* BitcoinContact.m */,
-				E55275231D442F4B002F241B /* BitcoinContact.h */,
-				E55275241D45431E002F241B /* BitcoinTransaction.m */,
-				E55275261D45432A002F241B /* BitcoinTransaction.h */,
-				E552F3901D44003D00574166 /* MainPageViewController.m */,
-				E552F3921D44004700574166 /* MainPageViewController.h */,
 				E5C4B5441D46B6E50008EC1A /* SendTransactionViewController.m */,
 				E5C4B5461D46B6F60008EC1A /* SendTransactionViewController.h */,
 				E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */,
@@ -330,11 +311,9 @@
 				E50AF2171D42C85700D20AB2 /* ContactViewController.m in Sources */,
 				E50AF2141D42C1D600D20AB2 /* ContactManager.m in Sources */,
 				E5AB5E7D1D2C24660034B3EF /* ViewController.m in Sources */,
-				E552F3911D44003D00574166 /* MainPageViewController.m in Sources */,
 				E50AF21A1D42CC0C00D20AB2 /* MenuViewController.m in Sources */,
 				E58869B01D4D78B6005663CC /* TransactionListViewController.m in Sources */,
 				E5AB5E7A1D2C24660034B3EF /* AppDelegate.m in Sources */,
-				E55275251D45431E002F241B /* BitcoinTransaction.m in Sources */,
 				E5D4989C1D46F7EB00C605DB /* TransactionManager.m in Sources */,
 				E5C4B5481D46EDBE0008EC1A /* AddressListView.m in Sources */,
 				E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */,
@@ -346,7 +325,6 @@
 				E5C4B5451D46B6E50008EC1A /* SendTransactionViewController.m in Sources */,
 				E5C32C2A1D402CF40020486B /* AddressViewController.m in Sources */,
 				E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */,
-				E55275221D442EBD002F241B /* BitcoinContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
