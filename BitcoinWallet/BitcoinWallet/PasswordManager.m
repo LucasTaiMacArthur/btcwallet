@@ -22,6 +22,7 @@
 // check the SHA256 hashed password at documents/password.txt
 + (int)verifyPassword:(NSString*)inputString {
     
+	#ifndef WINOBJC
     // get password data from file
     NSString *pwdFilePath = [PasswordManager getPasswordFilePath];
     NSFileManager *fileman = [NSFileManager defaultManager];
@@ -40,11 +41,15 @@
     } else {
         return 0;
     }
+
+	#endif
+
+	return 0;
 }
 
 // create a password file at documents/password.txt hashed with sha256
 + (int)createPasswordFile:(NSString*)inputString {
-    
+    #ifndef WINOBJC
     NSString *pwdFilePath = [PasswordManager getPasswordFilePath];
     NSFileManager *fileman = [NSFileManager defaultManager];
     const unsigned char *str = [inputString UTF8String];
@@ -59,6 +64,9 @@
     }else {
         return 0;
     }
+	#endif
+
+	return 0;
 }
 
 + (int)passwordFileExists {

@@ -9,7 +9,6 @@
 #ifndef MenuViewController_h
 #define MenuViewController_h
 #import <UIKit/UIKit.h>
-#import <CoreBitcoin/CoreBitcoin.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AddressManager.h"
 #import "NetworkOps.h"

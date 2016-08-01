@@ -122,7 +122,8 @@
         UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create Contact" message:@"Provide a name for this contact" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             // get string pair
-            NSString *newTag = newAddress.textFields.firstObject.text;
+			UITextField *nameField = (UITextField*)newAddress.textFields.firstObject;
+            NSString *newTag = nameField.text;
             NSString *finalString = [NSString stringWithFormat:@"%@,%@\n",newTag,addrString];
             ContactManager *contactManager = [ContactManager globalManager];
             [contactManager addKeyPair:finalString];
