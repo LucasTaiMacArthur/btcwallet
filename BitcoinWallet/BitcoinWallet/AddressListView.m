@@ -91,7 +91,8 @@
     UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create New Address" message:@"Provide a nickname for this address" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // get string pair
-        NSString *newTag = newAddress.textFields.firstObject.text;
+        UITextField *addressName = (UITextField*)newAddress.textFields.firstObject;
+        NSString *newTag = addressName.text;
         [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
         // add kp to the manager
         [self.view setNeedsDisplay];
