@@ -20,7 +20,15 @@
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
 
-    
+	// create a qr scanner based on WDPOS Namespace 
+	#ifdef WINOBJC
+
+
+	#endif
+
+
+	// this is not implemented in islandwood
+    #ifndef WINOBJC
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
     AVCaptureDevice *frontCam = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *err = nil;
@@ -37,6 +45,8 @@
     [captureSession addOutput:qrOut];
     [qrOut setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
     [qrOut setMetadataObjectsDelegate:self queue:delegateQ];
+
+	#endif
     
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
@@ -60,8 +70,8 @@
     [self.instructionLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.instructionLabel];
 
-
-    
+	// neither is this
+    #ifndef WINOBJC
     // add the imageview with callback
     _displayView = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
     [_displayView setVideoGravity:AVLayerVideoGravityResizeAspectFill];
@@ -81,10 +91,10 @@
     [_displayView setFrame:_previewContainer.frame];
     [self.view.layer addSublayer:_displayView];
 
+	#endif
 
 
-
-    
+    #ifndef WINOBJC
     // set platform agnostic constraints
     NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
     NSDictionary *views = @{ @"submit" : self.instructionLabel,
@@ -101,8 +111,10 @@
                                                                       metrics:metrics
                                                                         views:views]];
     
+	
     // start the camera
     [captureSession startRunning];
+	#endif
 
 
 

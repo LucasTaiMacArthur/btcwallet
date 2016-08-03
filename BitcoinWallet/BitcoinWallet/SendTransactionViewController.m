@@ -55,15 +55,8 @@
     self.amountField.layer.borderWidth = 1;
     self.amountField.placeholder = @"Enter Amount in BTC";
     [self.amountField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [self.view addSubview:self.amountField];
+    //[self.view addSubview:self.amountField];
     
-    // set up text block
-    self.btcLabel = [[UILabel alloc] init];
-    self.btcLabel.text = @"TO";
-    self.btcLabel.font = [UIFont systemFontOfSize:25];
-    [self.btcLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.btcLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.view addSubview:self.btcLabel];
     
     // set up text block
     self.toLabel = [[UILabel alloc] init];
@@ -71,13 +64,12 @@
     self.toLabel.font = [UIFont systemFontOfSize:25];
     [self.toLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.toLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.view addSubview:self.toLabel];
+   // [self.view addSubview:self.toLabel];
     
     // set up the contact spinner
     self.contactPicker = [[UIPickerView alloc]init];
     self.contactPicker.delegate = self;
     self.contactPicker.dataSource = self;
-    [self.contactPicker setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.contactPicker];
     
     // set up the address spinner
@@ -86,6 +78,15 @@
     self.addressPicker.dataSource = self;
     [self.addressPicker setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.addressPicker];
+	
+	// set up text field
+    self.amountField = [[UITextField alloc] init];
+    [self.amountField setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.amountField.textAlignment = NSTextAlignmentCenter;
+    self.amountField.layer.borderWidth = 1;
+    self.amountField.placeholder = @"Enter Amount in BTC";
+    [self.amountField setKeyboardType:UIKeyboardTypeDecimalPad];
+    [self.view addSubview:self.amountField];
 
     
     
@@ -95,7 +96,14 @@
 
 
     
-    // set platform agnostic constraints
+
+	// looks good on windows
+	#ifdef WINOBJC
+	#endif
+
+	// looks good on ios
+	#ifndef WINOBJC
+	// set platform agnostic constraints
     NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
     NSDictionary *views = @{ @"amount" : self.amountField,
                              @"btc" : self.btcLabel,
@@ -104,6 +112,8 @@
                              @"address" : self.addressPicker
                              };
     
+
+
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[btc][contact]"
                                                                       options:0
                                                                       metrics:metrics
@@ -135,6 +145,8 @@
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
+	#endif
+
 
 
 
@@ -142,6 +154,9 @@
 }
 
 - (void)sendPaymentPressed {
+
+	#ifndef WINOBJC
+
     NSString *pickerContact = [self pickerView:_contactPicker titleForRow:[_contactPicker selectedRowInComponent:0] forComponent:0];
     NSString *pickerAddress = [self pickerView:_addressPicker titleForRow:[_addressPicker selectedRowInComponent:0] forComponent:0];
     NSString *paymentMessage = [NSString stringWithFormat:@"Confirm you want to send %@ BTC from your address \"%@\" to your contact \"%@\"\n",_amountField.text, pickerAddress, pickerContact];
@@ -150,6 +165,7 @@
         // send the transaction handler the from -> to address and the amount
         
         double amountInSatoshi = [[_amountField text]doubleValue] * 100000000;
+
         NSNumber *amount = [NSNumber numberWithDouble:amountInSatoshi];
         NSString *inputAddr = [_addressData objectForKey:pickerAddress];
         NSString *outputAddr = [_contactData objectForKey:pickerContact];
@@ -200,6 +216,10 @@
         // nothing
     }];
 
+	#endif 
+
+	#ifdef WINOBJC
+
     
 }
 
@@ -245,7 +265,34 @@
     }];
 }
 
+#ifdef WINOBJC
+- (CGRect)calcContactPickerFrame {
+	CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+	CGRect contactFrame = CGRectMake(75,110,frameWidth-150,200);
+	return contactFrame;
+}
 
+- (CGRect)calcAddressPickerFrame {
+	CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+	CGRect contactFrame = CGRectMake(75,225,frameWidth-150,250);
+	return contactFrame;
+}
+
+- (CGRect)calcAmountFieldFrame {
+	CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+	CGRect contactFrame = CGRectMake(25,50,frameWidth-50,75);
+	return contactFrame;
+}
+
+-(void) viewWillLayoutSubviews {
+	self.contactPicker.frame = [self calcContactPickerFrame];
+	self.addressPicker.frame = [self calcAddressPickerFrame];
+	self.amountField.frame = [self calcAmountFieldFrame];
+} 
+#endif
 
 
 

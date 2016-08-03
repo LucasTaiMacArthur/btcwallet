@@ -16,9 +16,10 @@ static NSDictionary *contacts;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /*
-    ContactManager *man = [ContactManager globalManager];
     
+    ContactManager *man = [ContactManager globalManager];
+	[man createKeyPairsWithDummyData];
+    /*
     printf("THE CONTACT DIR WAS: %i\n",[man contactDirectoryExists]);
 
     

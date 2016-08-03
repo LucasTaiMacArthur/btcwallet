@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "AddressListView.h"
 
+// import ui/notifcations for the toast if we are on a windows system
+#ifdef WINOBJC
+#import <UWP/WindowsUINotifications.h>
+#import <UWP/WindowsDataXmlDom.h>
+#endif
+
 @implementation AddressListView
 
 - (void)viewDidLoad {
@@ -88,6 +94,9 @@
 }
 
 - (void)addNewAddressPressed {
+
+	#ifndef WINOBJC
+
     UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create New Address" message:@"Provide a nickname for this address" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // get string pair
@@ -97,24 +106,81 @@
         // add kp to the manager
         [self.view setNeedsDisplay];
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate date]];
-        
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         // just quietly exit
     }];
-    
     [newAddress addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"Adress Name";
     }];
-
-    
     [newAddress addAction:cancel];
     [newAddress addAction:submit];
-
-
     [self presentViewController:newAddress animated:YES completion:^{
         // nothing
     }];
+	#endif 
+
+	#ifdef WINOBJC
+	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
+
+	NSString *title = @"Create New Address";
+	NSString *content = @"Provide a nickname for this address";
+	
+
+
+    NSString* xmlString = @"<toast>"
+
+                           "<visual>"
+
+                           "<binding template=\"ToastGeneric\">"
+
+                           "<image placement=\"appLogoOverride\" src=\"ms-appx:///espresso.jpg\"/>"
+
+                           "<text hint-style=\"header\">BitcoinWallet</text>"
+
+                           "<text hint-style=\"subheader\" hint-maxLines=\"2\">Choose a name for this address.</text>"
+
+                           "</binding>"
+
+                           "</visual>"
+
+                           "<actions>"
+
+                           "<input type=\"text\" id=\"1\" placeHolderContent=\"Type a Name\"/>"
+
+                           "<action content=\"Submit\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
+						   
+                           "activationType=\"foreground\" arguments=\"action?=Submit\"/>"
+
+                           "</actions>"
+
+                           "</toast>";
+
+	WDXDXmlDocument* tileXml = [WDXDXmlDocument make];
+    [tileXml loadXml:xmlString];
+    WUNToastNotification *notification = [WUNToastNotification makeToastNotification:tileXml];
+
+
+	// perform the callback
+	[notification addActivatedEvent:^void(WUNToastNotification * sender, RTObject * args)
+    {
+        // Get the event info and args
+		WUNToastActivatedEventArgs* toastArgs = rt_dynamic_cast([WUNToastActivatedEventArgs  class], args);
+		NSLog(@"Notification args: %@", toastArgs.arguments);
+		NSString *newTag = @"TestName";
+        [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
+
+		
+    }];
+
+	// Create the toast notification manager
+    WUNToastNotifier *toastNotifier = [WUNToastNotificationManager createToastNotifier];
+	
+    // Show the toast notification
+    [toastNotifier show:notification];
+
+	#endif
+
 }
 
 
@@ -123,6 +189,13 @@
         // nil
     }];
 }
+
+- (void)AddressSubmitPressed {
+    [self dismissViewControllerAnimated:TRUE completion:^{
+        // nil
+    }];
+}
+
 
 
 @end
