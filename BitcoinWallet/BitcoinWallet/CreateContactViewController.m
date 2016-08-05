@@ -26,7 +26,6 @@
 
 	#endif
 
-
 	// this is not implemented in islandwood
     #ifndef WINOBJC
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];

@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "SendTransactionViewController.h"
 
+// import ui/notifcations for the toast if we are on a windows system
+#ifdef WINOBJC
+#import <UWP/WindowsUINotifications.h>
+#import <UWP/WindowsDataXmlDom.h>
+#endif
+
 @implementation SendTransactionViewController
 
 - (void)viewDidLoad {
@@ -155,11 +161,18 @@
 
 - (void)sendPaymentPressed {
 
-	#ifndef WINOBJC
+	// things are broken don't try this yet 
+	#ifdef WINOBJC
+	return;
+	#endif
 
     NSString *pickerContact = [self pickerView:_contactPicker titleForRow:[_contactPicker selectedRowInComponent:0] forComponent:0];
     NSString *pickerAddress = [self pickerView:_addressPicker titleForRow:[_addressPicker selectedRowInComponent:0] forComponent:0];
     NSString *paymentMessage = [NSString stringWithFormat:@"Confirm you want to send %@ BTC from your address \"%@\" to your contact \"%@\"\n",_amountField.text, pickerAddress, pickerContact];
+
+
+	#ifndef WINOBJC
+
     UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Confirm Payment" message:paymentMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         // send the transaction handler the from -> to address and the amount
@@ -219,6 +232,57 @@
 	#endif 
 
 	#ifdef WINOBJC
+	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
+	return;
+
+    NSString* xmlString = @"<toast>"
+
+                           "<visual>"
+
+                           "<binding template=\"ToastGeneric\">"
+
+                           "<text>Payment Info</text>"
+
+                           "<text>Is this Payment Correct?</text>"
+
+                           "</binding>"
+
+                           "</visual>"
+
+                           "<actions>"
+
+                           "<action content=\"Submit\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
+						   
+                           "activationType=\"foreground\" arguments=\"submit\"/>"
+
+						   "<action content=\"Cancel\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
+						   
+                           "activationType=\"foreground\" arguments=\"cancel\"/>"
+
+                           "</actions>"
+
+                           "</toast>";
+
+	WDXDXmlDocument* tileXml = [WDXDXmlDocument make];
+    [tileXml loadXml:xmlString];
+    WUNToastNotification *notification = [WUNToastNotification makeToastNotification:tileXml];
+
+
+	// perform the callback
+	[notification addActivatedEvent:^void(WUNToastNotification * sender, RTObject * args)
+    {
+      // dont try anything yet since it crashes
+
+
+    }];
+
+	// Create the toast notification manager
+    WUNToastNotifier *toastNotifier = [WUNToastNotificationManager createToastNotifier];
+	
+    // Show the toast notification
+    [toastNotifier show:notification];
+
+	#endif
 
     
 }

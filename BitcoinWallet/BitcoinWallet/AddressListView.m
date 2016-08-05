@@ -17,6 +17,8 @@
 
 @implementation AddressListView
 
+static UITextField *winNameField;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -53,7 +55,7 @@
     [_mainTable setDataSource:self];
     _mainTable.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     [self.view addSubview:_mainTable];
-    
+
     
 
 
@@ -123,11 +125,6 @@
 	#ifdef WINOBJC
 	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
 
-	NSString *title = @"Create New Address";
-	NSString *content = @"Provide a nickname for this address";
-	
-
-
     NSString* xmlString = @"<toast>"
 
                            "<visual>"
@@ -148,9 +145,13 @@
 
                            "<input type=\"text\" id=\"1\" placeHolderContent=\"Type a Name\"/>"
 
-                           "<action content=\"Submit\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
+                           "<action content=\"Submit\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
 						   
-                           "activationType=\"foreground\" arguments=\"action?=Submit\"/>"
+                           "activationType=\"foreground\" arguments=\"submit\"/>"
+
+						   "<action content=\"Cancel\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
+						   
+                           "activationType=\"foreground\" arguments=\"cancel\"/>"
 
                            "</actions>"
 
@@ -166,10 +167,18 @@
     {
         // Get the event info and args
 		WUNToastActivatedEventArgs* toastArgs = rt_dynamic_cast([WUNToastActivatedEventArgs  class], args);
-		NSLog(@"Notification args: %@", toastArgs.arguments);
-		NSString *newTag = @"TestName";
-        [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
+        NSLog(@"Notification tag: %@", sender.tag); 
+        NSLog(@"Notification group: %@", sender.group); 
+        NSLog(@"Notification args: %@", toastArgs.arguments); 
 
+		// if the "cancel" button arg has hit, we simply exit
+		if([toastArgs.arguments isEqualToString:@"cancel"]) {
+			return;
+		}
+
+
+
+		NSLog(@"Got here %@",[sender.content getXml]);
 		
     }];
 
@@ -195,6 +204,7 @@
         // nil
     }];
 }
+
 
 
 
