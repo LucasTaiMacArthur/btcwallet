@@ -10,7 +10,6 @@
 		E50AF2141D42C1D600D20AB2 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2131D42C1D600D20AB2 /* ContactManager.m */; };
 		E50AF2171D42C85700D20AB2 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2161D42C85700D20AB2 /* ContactViewController.m */; };
 		E50AF21A1D42CC0C00D20AB2 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */; };
-		E54B04101D3FE971001727E0 /* PasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E54B040F1D3FE971001727E0 /* PasswordManager.m */; };
 		E55732F01D2EC31D00EC416A /* CryptoOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E55732EF1D2EC31D00EC416A /* CryptoOps.m */; };
 		E5789F131D3D454B009670CF /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5789F121D3D454B009670CF /* AddressManager.m */; };
 		E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E57928AB1D34486000FF77D4 /* MainViewController.m */; };
@@ -18,15 +17,15 @@
 		E58869B01D4D78B6005663CC /* TransactionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58869AF1D4D78B6005663CC /* TransactionListViewController.m */; };
 		E5AB5E771D2C24660034B3EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AB5E761D2C24660034B3EF /* main.m */; };
 		E5AB5E7A1D2C24660034B3EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AB5E791D2C24660034B3EF /* AppDelegate.m */; };
-		E5AB5E7D1D2C24660034B3EF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AB5E7C1D2C24660034B3EF /* ViewController.m */; };
 		E5AB5E801D2C24660034B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AB5E7E1D2C24660034B3EF /* Main.storyboard */; };
 		E5AB5E821D2C24660034B3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5AB5E811D2C24660034B3EF /* Assets.xcassets */; };
 		E5AB5E851D2C24660034B3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AB5E831D2C24660034B3EF /* LaunchScreen.storyboard */; };
+		E5C0286C1D5B9AD50096C791 /* DEREncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C028691D5B9AD50096C791 /* DEREncoder.m */; };
+		E5C0286D1D5B9AD50096C791 /* uECC.c in Sources */ = {isa = PBXBuildFile; fileRef = E5C0286A1D5B9AD50096C791 /* uECC.c */; };
 		E5C32C2A1D402CF40020486B /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C32C291D402CF40020486B /* AddressViewController.m */; };
 		E5C4B5451D46B6E50008EC1A /* SendTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4B5441D46B6E50008EC1A /* SendTransactionViewController.m */; };
 		E5C4B5481D46EDBE0008EC1A /* AddressListView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4B5471D46EDBE0008EC1A /* AddressListView.m */; };
 		E5D4989C1D46F7EB00C605DB /* TransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D4989B1D46F7EB00C605DB /* TransactionManager.m */; };
-		E5E6945C1D42D92A0055469B /* BalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E6945B1D42D92A0055469B /* BalanceViewController.m */; };
 		E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE67A61D304F5A00BEF981 /* NetworkOps.m */; };
 		E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */; };
 		F980F2367CFAA780EA3A38E3 /* libPods-BitcoinWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DE492389282D10746A128A /* libPods-BitcoinWallet.a */; };
@@ -42,8 +41,6 @@
 		E50AF2181D42C8B700D20AB2 /* ContactViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
 		E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E50AF21B1D42CC2400D20AB2 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
-		E54B040F1D3FE971001727E0 /* PasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordManager.m; sourceTree = "<group>"; };
-		E54B04111D3FE97D001727E0 /* PasswordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordManager.h; sourceTree = "<group>"; };
 		E55732EF1D2EC31D00EC416A /* CryptoOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoOps.m; sourceTree = "<group>"; };
 		E57283381D2ED117009117CC /* CryptoOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoOps.h; sourceTree = "<group>"; };
 		E5789F121D3D454B009670CF /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressManager.m; path = ../AddressManager.m; sourceTree = "<group>"; };
@@ -58,12 +55,14 @@
 		E5AB5E761D2C24660034B3EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E5AB5E781D2C24660034B3EF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E5AB5E791D2C24660034B3EF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E5AB5E7B1D2C24660034B3EF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E5AB5E7C1D2C24660034B3EF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E5AB5E7F1D2C24660034B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5AB5E811D2C24660034B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5AB5E841D2C24660034B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5AB5E861D2C24660034B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5C028681D5B9AD50096C791 /* DEREncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DEREncoder.h; path = BitcoinWallet/DEREncoder.h; sourceTree = "<group>"; };
+		E5C028691D5B9AD50096C791 /* DEREncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DEREncoder.m; path = BitcoinWallet/DEREncoder.m; sourceTree = "<group>"; };
+		E5C0286A1D5B9AD50096C791 /* uECC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = uECC.c; path = BitcoinWallet/uECC.c; sourceTree = "<group>"; };
+		E5C0286B1D5B9AD50096C791 /* uECC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uECC.h; path = BitcoinWallet/uECC.h; sourceTree = "<group>"; };
 		E5C32C291D402CF40020486B /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		E5C32C2B1D402D040020486B /* AddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		E5C4B5441D46B6E50008EC1A /* SendTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendTransactionViewController.m; sourceTree = "<group>"; };
@@ -72,8 +71,6 @@
 		E5C4B5491D46EDD20008EC1A /* AddressListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressListView.h; sourceTree = "<group>"; };
 		E5D4989B1D46F7EB00C605DB /* TransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionManager.m; sourceTree = "<group>"; };
 		E5D4989D1D46F7FA00C605DB /* TransactionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransactionManager.h; sourceTree = "<group>"; };
-		E5E6945B1D42D92A0055469B /* BalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceViewController.m; sourceTree = "<group>"; };
-		E5E6945D1D42D9760055469B /* BalanceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BalanceViewController.h; sourceTree = "<group>"; };
 		E5EE67A61D304F5A00BEF981 /* NetworkOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkOps.m; sourceTree = "<group>"; };
 		E5EE67A81D30650400BEF981 /* NetworkOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkOps.h; sourceTree = "<group>"; };
 		E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateContactViewController.m; sourceTree = "<group>"; };
@@ -112,6 +109,10 @@
 		E5AB5E691D2C24660034B3EF = {
 			isa = PBXGroup;
 			children = (
+				E5C028681D5B9AD50096C791 /* DEREncoder.h */,
+				E5C028691D5B9AD50096C791 /* DEREncoder.m */,
+				E5C0286A1D5B9AD50096C791 /* uECC.c */,
+				E5C0286B1D5B9AD50096C791 /* uECC.h */,
 				E5AB5E741D2C24660034B3EF /* BitcoinWallet */,
 				E5AB5E731D2C24660034B3EF /* Products */,
 				E594F3891D4D4C0100CEC105 /* Frameworks */,
@@ -134,8 +135,6 @@
 				E5789F141D3D46E0009670CF /* AddressManager.h */,
 				E5AB5E781D2C24660034B3EF /* AppDelegate.h */,
 				E5AB5E791D2C24660034B3EF /* AppDelegate.m */,
-				E5AB5E7B1D2C24660034B3EF /* ViewController.h */,
-				E5AB5E7C1D2C24660034B3EF /* ViewController.m */,
 				E5AB5E7E1D2C24660034B3EF /* Main.storyboard */,
 				E5C4B5471D46EDBE0008EC1A /* AddressListView.m */,
 				E5C4B5491D46EDD20008EC1A /* AddressListView.h */,
@@ -155,16 +154,12 @@
 				E5EE67A81D30650400BEF981 /* NetworkOps.h */,
 				E57928AB1D34486000FF77D4 /* MainViewController.m */,
 				E57928AD1D34488400FF77D4 /* MainViewController.h */,
-				E54B040F1D3FE971001727E0 /* PasswordManager.m */,
-				E54B04111D3FE97D001727E0 /* PasswordManager.h */,
 				E5C32C291D402CF40020486B /* AddressViewController.m */,
 				E5C32C2B1D402D040020486B /* AddressViewController.h */,
 				E50AF2131D42C1D600D20AB2 /* ContactManager.m */,
 				E50AF2151D42C27C00D20AB2 /* ContactManager.h */,
 				E50AF2161D42C85700D20AB2 /* ContactViewController.m */,
 				E50AF2181D42C8B700D20AB2 /* ContactViewController.h */,
-				E5E6945B1D42D92A0055469B /* BalanceViewController.m */,
-				E5E6945D1D42D9760055469B /* BalanceViewController.h */,
 				E50AF2191D42CC0C00D20AB2 /* MenuViewController.m */,
 				E50AF21B1D42CC2400D20AB2 /* MenuViewController.h */,
 				E5C4B5441D46B6E50008EC1A /* SendTransactionViewController.m */,
@@ -307,21 +302,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55732F01D2EC31D00EC416A /* CryptoOps.m in Sources */,
-				E5E6945C1D42D92A0055469B /* BalanceViewController.m in Sources */,
+				E5C0286D1D5B9AD50096C791 /* uECC.c in Sources */,
 				E50AF2171D42C85700D20AB2 /* ContactViewController.m in Sources */,
 				E50AF2141D42C1D600D20AB2 /* ContactManager.m in Sources */,
-				E5AB5E7D1D2C24660034B3EF /* ViewController.m in Sources */,
 				E50AF21A1D42CC0C00D20AB2 /* MenuViewController.m in Sources */,
 				E58869B01D4D78B6005663CC /* TransactionListViewController.m in Sources */,
 				E5AB5E7A1D2C24660034B3EF /* AppDelegate.m in Sources */,
 				E5D4989C1D46F7EB00C605DB /* TransactionManager.m in Sources */,
+				E5C0286C1D5B9AD50096C791 /* DEREncoder.m in Sources */,
 				E5C4B5481D46EDBE0008EC1A /* AddressListView.m in Sources */,
 				E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */,
 				E580F49D1D492DDC00500780 /* APINetworkOps.m in Sources */,
 				E5AB5E771D2C24660034B3EF /* main.m in Sources */,
 				E5789F131D3D454B009670CF /* AddressManager.m in Sources */,
 				E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */,
-				E54B04101D3FE971001727E0 /* PasswordManager.m in Sources */,
 				E5C4B5451D46B6E50008EC1A /* SendTransactionViewController.m in Sources */,
 				E5C32C2A1D402CF40020486B /* AddressViewController.m in Sources */,
 				E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */,
