@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "CreateContactViewController.h"
 
+#ifdef WINOBJC
+#import <UWP/WindowsUIXamlControls.h>
+#import <UWP/WindowsMediaCapture.h>
+#import <UWP/WindowsDevicesEnumeration.h>
+#endif
+
 @implementation CreateContactViewController
 
 
@@ -20,32 +26,19 @@
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
 
-	// create a qr scanner based on WDPOS Namespace 
-	#ifdef WINOBJC
-
-
-	#endif
-
-	// this is not implemented in islandwood
-    #ifndef WINOBJC
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
     AVCaptureDevice *frontCam = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *err = nil;
     AVCaptureDeviceInput *camInput = [AVCaptureDeviceInput deviceInputWithDevice:frontCam error:&err];
-    
     // start the capture session
     [captureSession addInput:camInput];
-    
     dispatch_queue_t delegateQ = dispatch_queue_create("delQ",NULL);
-
-    
     // attach metadata output to the session
     AVCaptureMetadataOutput *qrOut = [[AVCaptureMetadataOutput alloc] init];
     [captureSession addOutput:qrOut];
     [qrOut setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
     [qrOut setMetadataObjectsDelegate:self queue:delegateQ];
 
-	#endif
     
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
@@ -69,31 +62,7 @@
     [self.instructionLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.instructionLabel];
 
-	// neither is this
-    #ifndef WINOBJC
-    // add the imageview with callback
-    _displayView = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
-    [_displayView setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
-    
-    
-    
-    // add the container uiview
-    _previewContainer = [[UIView alloc] initWithFrame:CGRectMake(20, 100, frameWidth-40, 400)];
-    _previewContainer.layer.borderWidth = 1;
-    _previewContainer.layer.cornerRadius = 15;
-    _previewContainer.clipsToBounds = TRUE;
-    [_previewContainer setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [self.view addSubview:_previewContainer];
-    
-    [_displayView setFrame:_previewContainer.frame];
-    [self.view.layer addSublayer:_displayView];
 
-	#endif
-
-
-    #ifndef WINOBJC
     // set platform agnostic constraints
     NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
     NSDictionary *views = @{ @"submit" : self.instructionLabel,
@@ -113,7 +82,6 @@
 	
     // start the camera
     [captureSession startRunning];
-	#endif
 
 
 
@@ -135,6 +103,12 @@
             // get string pair
 			UITextField *nameField = (UITextField*)newAddress.textFields.firstObject;
             NSString *newTag = nameField.text;
+
+			// quit if no name is given
+			if (newTag == NULL) {
+				return;
+			}
+
             NSString *finalString = [NSString stringWithFormat:@"%@,%@\n",newTag,addrString];
             ContactManager *contactManager = [ContactManager globalManager];
             [contactManager addKeyPair:finalString];

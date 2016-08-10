@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MainViewController.h"
+#ifdef WINOBJC
+#import <UWP/WindowsUIXamlControls.h>
+#import <UWP/WindowsMediaCapture.h>
+#import <UWP/WindowsDevicesEnumeration.h>
+#endif
 
 @implementation MainViewController
 
@@ -16,29 +21,6 @@ static NSDictionary *contacts;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    ContactManager *man = [ContactManager globalManager];
-	[man createKeyPairsWithDummyData];
-    /*
-    printf("THE CONTACT DIR WAS: %i\n",[man contactDirectoryExists]);
-
-    
-    if ([man contactDirectoryExists]){
-    }else {
-        [man createContactDirectory];
-    }
-    
-    printf("THE CONTACT DIR WAS: %i\n",[man contactDirectoryExists]);
-    
-    if ([man addContact:@"Joe Joe"] && [man addContact:@"John Smith"]) {
-        printf("Both Contacts Successfully Added\n");
-    }
-    
-    
-    [man getAllContactNames];
-    
-     
-    */
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
     
@@ -59,7 +41,7 @@ static NSDictionary *contacts;
     [self.view addSubview:_navBar];
     
     
-    // dummy data
+    // Fill Table
     ContactManager *contactMan = [ContactManager globalManager];
     NSDictionary *pairDict = [contactMan getKeyPairs];
     contacts = pairDict;
@@ -117,11 +99,52 @@ static NSDictionary *contacts;
 
 - (void)addButtonPressed {
     
+	#ifndef WINOBJC
     CreateContactViewController *toShow = [[CreateContactViewController alloc] init];
     [toShow setModalPresentationStyle:UIModalPresentationFullScreen];
     [toShow setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:toShow animated:YES completion:^{
     }];
+	#endif 
+
+	// windows projections don't have any QR Support. This is two text blocks because of time constraints
+	#ifdef WINOBJC
+	WXCContentDialog *alert = [WXCContentDialog make];
+	alert.primaryButtonText = @"Accept";
+	alert.secondaryButtonText = @"Reject";
+
+	// put a text block as the title
+	WXCTextBlock *title = [WXCTextBlock make];
+	title.text = @"Create New Contact";
+	alert.title = title;
+
+	// put a StackPanel containing two text blocks in as the content
+	WXCTextBox* nameBox = [WXCTextBox make];
+	nameBox.placeholderText = @"Address_Nickname,Address";
+	alert.content = nameBox;
+	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+		// 1 is accept
+		if (success == 1){
+			// grab the text box's data, make a new address with that name
+			NSString *newTag = nameBox.text;
+
+			// if nothing put in, quit
+			if (newTag == NULL) {
+				return;
+			}
+			
+			// if it doesn't fit the regex [alphanum],[alphanum] it isn't valid either
+
+			// get contact man, put split string in
+			ContactManager *con = [ContactManager globalManager];
+			[con addKeyPair:newTag];
+		}
+	} failure:^(NSError* failure) {
+		// nope
+	}];
+
+
+	#endif
 
 }
 

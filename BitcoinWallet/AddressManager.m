@@ -43,7 +43,8 @@ static AddressManager *globalManager = nil;
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
     printf("%s\n",[csvString UTF8String]);
-    
+    NSLog(@"%@",csvString);
+
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"-\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];
@@ -69,6 +70,7 @@ static AddressManager *globalManager = nil;
     NSString *fileurl = [docurl stringByAppendingString:@"/keypairs.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
+	NSLog(@"%@",csvString);
     printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"-\n,"];
@@ -97,6 +99,8 @@ static AddressManager *globalManager = nil;
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
     printf("%s\n",[csvString UTF8String]);
+	NSLog(@"%@",csvString);
+
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"-\n,"];
     NSArray *splitString = [[NSArray alloc] init];
@@ -124,7 +128,8 @@ static AddressManager *globalManager = nil;
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
     printf("%s\n",[csvString UTF8String]);
-    
+    NSLog(@"%@",csvString);
+
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"-\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];

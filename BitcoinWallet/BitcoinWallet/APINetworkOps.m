@@ -65,15 +65,14 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
     NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         printf("data returned\n");
-        NSError *err;
+        NSError *err = '\0';
+		NSString *test = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] retain];
+		NSLog(@"%@",test);
         NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
-        if (err){
-            printf("error\n");
-        } else {
             NSData *translatedData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:nil];
             retVal = [[[NSString alloc] initWithData:translatedData encoding:NSUTF8StringEncoding] retain];
             printf("STR FOLLOWS \n%s\n",[retVal UTF8String]);
-        }
+        
         
         
     }];
@@ -162,6 +161,7 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
     
     NSString *finalTXStr = [[NSString alloc]initWithData:finalTX encoding:NSUTF8StringEncoding];
     printf("RAW WHAT GOES OUT FUNC FOLLOWS \n %s \n ENDS HERE",[finalTXStr UTF8String]);
+	NSLog(@"%@",finalTXStr);
 
     
     
@@ -179,7 +179,8 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
         printf("data returned");
         NSString *stringreturned = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         printf("\ndata was %s\n",[stringreturned UTF8String]);
-        
+		NSLog(@"FINAL OUT");
+        NSLog(@"%@",stringreturned);
         retVal = [stringreturned retain];
         
         

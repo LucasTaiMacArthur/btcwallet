@@ -11,7 +11,7 @@
 
 // import ui/notifcations for the toast if we are on a windows system
 #ifdef WINOBJC
-#import <UWP/WindowsUINotifications.h>
+#import <UWP/WindowsUIXamlControls.h>
 #import <UWP/WindowsDataXmlDom.h>
 #endif
 
@@ -104,6 +104,9 @@ static UITextField *winNameField;
         // get string pair
         UITextField *addressName = (UITextField*)newAddress.textFields.firstObject;
         NSString *newTag = addressName.text;
+		if(newTag == NULL) {
+				return;
+		}
         [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
         // add kp to the manager
         [self.view setNeedsDisplay];
@@ -124,70 +127,36 @@ static UITextField *winNameField;
 
 	#ifdef WINOBJC
 	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
+	// The correct mapping is content dialog
+	WXCContentDialog *alert = [WXCContentDialog make];
+	alert.primaryButtonText = @"Accept";
+	alert.secondaryButtonText = @"Reject";
 
-    NSString* xmlString = @"<toast>"
+	// put a text block as the title
+	WXCTextBlock *title = [WXCTextBlock make];
+	title.text = @"Create New Address";
+	alert.title = title;
 
-                           "<visual>"
+	// put a text box in as the content
+	WXCTextBox* textBox = [WXCTextBox make];
+	textBox.placeholderText = @"Type an Address Nickname";
+	alert.content = textBox;
 
-                           "<binding template=\"ToastGeneric\">"
-
-                           "<image placement=\"appLogoOverride\" src=\"ms-appx:///espresso.jpg\"/>"
-
-                           "<text hint-style=\"header\">BitcoinWallet</text>"
-
-                           "<text hint-style=\"subheader\" hint-maxLines=\"2\">Choose a name for this address.</text>"
-
-                           "</binding>"
-
-                           "</visual>"
-
-                           "<actions>"
-
-                           "<input type=\"text\" id=\"1\" placeHolderContent=\"Type a Name\"/>"
-
-                           "<action content=\"Submit\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
-						   
-                           "activationType=\"foreground\" arguments=\"submit\"/>"
-
-						   "<action content=\"Cancel\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
-						   
-                           "activationType=\"foreground\" arguments=\"cancel\"/>"
-
-                           "</actions>"
-
-                           "</toast>";
-
-	WDXDXmlDocument* tileXml = [WDXDXmlDocument make];
-    [tileXml loadXml:xmlString];
-    WUNToastNotification *notification = [WUNToastNotification makeToastNotification:tileXml];
-
-
-	// perform the callback
-	[notification addActivatedEvent:^void(WUNToastNotification * sender, RTObject * args)
-    {
-        // Get the event info and args
-		WUNToastActivatedEventArgs* toastArgs = rt_dynamic_cast([WUNToastActivatedEventArgs  class], args);
-        NSLog(@"Notification tag: %@", sender.tag); 
-        NSLog(@"Notification group: %@", sender.group); 
-        NSLog(@"Notification args: %@", toastArgs.arguments); 
-
-		// if the "cancel" button arg has hit, we simply exit
-		if([toastArgs.arguments isEqualToString:@"cancel"]) {
-			return;
+	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+		//  if accept is pressed (WXCContentDialogResult.WXCContentDialogResultPrimary = 1)
+		if (success == 1){
+			// grab the text box's data, make a new address with that name
+			NSString *newTag = textBox.text;
+			// if string is null it's no good
+			if(newTag == NULL) {
+				return;
+			}
+			[APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
 		}
-
-
-
-		NSLog(@"Got here %@",[sender.content getXml]);
-		
-    }];
-
-	// Create the toast notification manager
-    WUNToastNotifier *toastNotifier = [WUNToastNotificationManager createToastNotifier];
-	
-    // Show the toast notification
-    [toastNotifier show:notification];
-
+	} failure:^(NSError* failure) {
+		// nope
+	}];
+    
 	#endif
 
 }

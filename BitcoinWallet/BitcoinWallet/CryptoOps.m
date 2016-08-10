@@ -10,6 +10,8 @@
 #import <Foundation/Foundation.h>
 #include <stdio.h>
 #include <string.h>
+#include "uECC.h"
+#include "DEREncoder.h"
 
 
 @implementation CryptoOps
@@ -30,16 +32,18 @@
     // this needs a char to hex conversion
     // each 2 chars should be interpreted as a byte
     
-    #ifndef WINOBJC
-    BTCKey *transactionPkey = [[BTCKey alloc]initWithPrivateKey:privkeyAsBytes];
-    #endif
-
 	NSData *signedHash;
 
-	#ifndef WINOBJC
-    signedHash = [transactionPkey signatureForHash:correctedPrivBytes];
-    #endif
-    // concat into a c string, then into a NSString
+	// get the ~char representations of our data
+	const uint8_t *privateKey = (uint8_t*)[privkeyAsBytes bytes];
+	const uint8_t *hashData = (uint8_t*)[correctedPrivBytes bytes];
+	uint8_t *result = calloc(100,sizeof(uint8_t));
+
+	// sign with ECC Lib (result is 64 bytes), then DER Encode
+	int signingResult = uECC_sign(privateKey,hashData,result);
+	NSData* unsignedHash = [[NSData alloc]initWithBytes:result length:64];
+	signedHash = [DEREncoder derEncodeSignature:unsignedHash];
+
     
     NSString *signedHasAsString = [self dataToHexEncodedString:signedHash];
     

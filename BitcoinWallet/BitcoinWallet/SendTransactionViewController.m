@@ -13,6 +13,7 @@
 #ifdef WINOBJC
 #import <UWP/WindowsUINotifications.h>
 #import <UWP/WindowsDataXmlDom.h>
+#import <UWP/WindowsUIXamlControls.h>
 #endif
 
 @implementation SendTransactionViewController
@@ -61,7 +62,7 @@
     self.amountField.layer.borderWidth = 1;
     self.amountField.placeholder = @"Enter Amount in BTC";
     [self.amountField setKeyboardType:UIKeyboardTypeDecimalPad];
-    //[self.view addSubview:self.amountField];
+    [self.view addSubview:self.amountField];
     
     
     // set up text block
@@ -70,7 +71,7 @@
     self.toLabel.font = [UIFont systemFontOfSize:25];
     [self.toLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.toLabel setTextAlignment:NSTextAlignmentLeft];
-   // [self.view addSubview:self.toLabel];
+    [self.view addSubview:self.toLabel];
     
     // set up the contact spinner
     self.contactPicker = [[UIPickerView alloc]init];
@@ -94,18 +95,6 @@
     [self.amountField setKeyboardType:UIKeyboardTypeDecimalPad];
     [self.view addSubview:self.amountField];
 
-    
-    
-    
-    
-
-
-
-    
-
-	// looks good on windows
-	#ifdef WINOBJC
-	#endif
 
 	// looks good on ios
 	#ifndef WINOBJC
@@ -161,15 +150,21 @@
 
 - (void)sendPaymentPressed {
 
-	// things are broken don't try this yet 
-	#ifdef WINOBJC
-	return;
-	#endif
+	
 
     NSString *pickerContact = [self pickerView:_contactPicker titleForRow:[_contactPicker selectedRowInComponent:0] forComponent:0];
     NSString *pickerAddress = [self pickerView:_addressPicker titleForRow:[_addressPicker selectedRowInComponent:0] forComponent:0];
-    NSString *paymentMessage = [NSString stringWithFormat:@"Confirm you want to send %@ BTC from your address \"%@\" to your contact \"%@\"\n",_amountField.text, pickerAddress, pickerContact];
+    NSString *paymentMessage = [NSString stringWithFormat:@"Confirm you want to send %@ BTC from your address \"%@\" \nto your contact \"%@\"\n",_amountField.text, pickerAddress, pickerContact];
+	NSLog(@"%@",paymentMessage);
 
+	NSString *amountString = [_amountField text];
+
+	// ERROR CHECKING - PLATFORM AGNOSTIC
+	// Checks for null to,from,amount
+	if (pickerContact == NULL || pickerAddress == NULL || amountString == NULL) {
+		return;
+	}
+	// TODO: checks if amount string is a valid number (no double decimals)
 
 	#ifndef WINOBJC
 
@@ -232,55 +227,70 @@
 	#endif 
 
 	#ifdef WINOBJC
+
 	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
-	return;
+	// The correct mapping is content dialog
+	WXCContentDialog *alert = [WXCContentDialog make];
+	alert.primaryButtonText = @"Accept";
+	alert.secondaryButtonText = @"Reject";
 
-    NSString* xmlString = @"<toast>"
+	// put a text block as the title
+	WXCTextBlock *title = [WXCTextBlock make];
+	title.text = @"Send Transaction";
+	alert.title = title;
 
-                           "<visual>"
+	// put a text box in as the content
+	WXCTextBlock* contentText = [WXCTextBlock make];
+	contentText.text = paymentMessage;
+	contentText.maxLines = 2;
+	alert.content = contentText;
 
-                           "<binding template=\"ToastGeneric\">"
+	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+		//  if accept is pressed (WXCContentDialogResult.WXCContentDialogResultPrimary = 1)
+		if (success == 1){
+		        double amountInSatoshi = [[_amountField text]doubleValue] * 100000000;
 
-                           "<text>Payment Info</text>"
+        NSNumber *amount = [NSNumber numberWithDouble:amountInSatoshi];
+        NSString *inputAddr = [_addressData objectForKey:pickerAddress];
+        NSString *outputAddr = [_contactData objectForKey:pickerContact];
+        printf("about to make an api call with addresses %s | %s  for amount %f\n",[inputAddr UTF8String],[outputAddr UTF8String],amountInSatoshi);
+        NSData *skele = [[APINetworkOps generatePartialTXWithInput:inputAddr andOutput:outputAddr andValue:amount] retain];
+        NSString *partialTx = [APINetworkOps getTXSkeletonWithData:skele];
+        
+        NSData *dataToSign = [[partialTx dataUsingEncoding:NSUTF8StringEncoding] retain];
+        
+        NSString* returnedData = [APINetworkOps sendCompletedTransaction:dataToSign forAddress:pickerAddress];
+        
+        NSData *dataFromString = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+        
+        //  create the json object
+        NSDictionary *finalTX = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:dataFromString options:0 error:nil];
+        
+        // error check (literally check for errors in the resturned object
+        if ( [finalTX objectForKey:@"errors"]) {
+            // if errors, fail quiet *for now*
+            return;
+        
+        } else {
+            // else if no errors, assume correct names from input
+            NSString *pt1 = [NSString stringWithFormat:@"%@,%@,",pickerAddress,pickerContact];
+            // now get the hash from /tx/hash->string
+            NSDictionary *tx = [finalTX objectForKey:@"tx"];
+            NSString *txHash = [tx objectForKey:@"hash"];
+            
+            // create transaction with format TO,FROM,HASH
+            NSString *finalTxString = [NSString stringWithFormat:@"%@%@\n",pt1,txHash];
+        
+            // create a transaction + add it to the trans controller
+            TransactionManager *txMan = [TransactionManager globalManager];
+            [txMan addTransHash:finalTxString];
+        }
 
-                           "<text>Is this Payment Correct?</text>"
 
-                           "</binding>"
-
-                           "</visual>"
-
-                           "<actions>"
-
-                           "<action content=\"Submit\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
-						   
-                           "activationType=\"foreground\" arguments=\"submit\"/>"
-
-						   "<action content=\"Cancel\" hint-inputId=\"1\" imageUri=\"ms-appx:///icon-white-espresso.png\" "
-						   
-                           "activationType=\"foreground\" arguments=\"cancel\"/>"
-
-                           "</actions>"
-
-                           "</toast>";
-
-	WDXDXmlDocument* tileXml = [WDXDXmlDocument make];
-    [tileXml loadXml:xmlString];
-    WUNToastNotification *notification = [WUNToastNotification makeToastNotification:tileXml];
-
-
-	// perform the callback
-	[notification addActivatedEvent:^void(WUNToastNotification * sender, RTObject * args)
-    {
-      // dont try anything yet since it crashes
-
-
-    }];
-
-	// Create the toast notification manager
-    WUNToastNotifier *toastNotifier = [WUNToastNotificationManager createToastNotifier];
-	
-    // Show the toast notification
-    [toastNotifier show:notification];
+		}
+	} failure:^(NSError* failure) {
+		// nope
+	}];
 
 	#endif
 

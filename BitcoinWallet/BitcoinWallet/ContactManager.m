@@ -25,10 +25,8 @@ static ContactManager *globalManager = nil;
 }
 
 - (void)createKeyPairsWithDummyData {
-    NSString *line1 = [[NSString alloc]initWithFormat:@"bit1,1JdJQftq3kQRTBVBMRJ4dcZe5yBJCuz6MR\n"];
-    NSString *line2 = [[NSString alloc]initWithFormat:@"bit2,1wuyDWpAzcz84XBWB5WLzHtHxnHb5Kqwo\n"];
+    NSString *line1 = [[NSString alloc]initWithFormat:@"testNetAddr,mv8x2Z64QHWEqi1STgyE3CaLUoiagebTFU\n"];
     [self addKeyPair:line1];
-    [self addKeyPair:line2];
 }
 
 // gets mapping of privkey(k) -> (pubkey)(v)
@@ -40,6 +38,7 @@ static ContactManager *globalManager = nil;
     NSString *fileurl = [docurl stringByAppendingString:@"/contacts.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
+	NSLog(@"%@",csvString);
     printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"\n,"];
