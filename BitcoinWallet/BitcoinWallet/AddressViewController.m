@@ -71,7 +71,10 @@
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
     
     dispatch_async(balanceQueue, ^{
-        [self getImageData:_address];
+        [[self getImageData:_address] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            // TODO: Find some use for the bolts callback
+            return nil;
+        }];
         
     });
     
