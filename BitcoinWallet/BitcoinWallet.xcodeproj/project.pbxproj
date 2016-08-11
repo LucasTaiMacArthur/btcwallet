@@ -28,13 +28,9 @@
 		E5D4989C1D46F7EB00C605DB /* TransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D4989B1D46F7EB00C605DB /* TransactionManager.m */; };
 		E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE67A61D304F5A00BEF981 /* NetworkOps.m */; };
 		E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */; };
-		F980F2367CFAA780EA3A38E3 /* libPods-BitcoinWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26DE492389282D10746A128A /* libPods-BitcoinWallet.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2051E128F42FF14A7330AD3B /* Pods-BitcoinWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitcoinWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-BitcoinWallet/Pods-BitcoinWallet.release.xcconfig"; sourceTree = "<group>"; };
-		26DE492389282D10746A128A /* libPods-BitcoinWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BitcoinWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		79820A9CB82B0825BD127F03 /* Pods-BitcoinWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitcoinWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BitcoinWallet/Pods-BitcoinWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		E50AF2131D42C1D600D20AB2 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		E50AF2151D42C27C00D20AB2 /* ContactManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
 		E50AF2161D42C85700D20AB2 /* ContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactViewController.m; sourceTree = "<group>"; };
@@ -82,30 +78,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F980F2367CFAA780EA3A38E3 /* libPods-BitcoinWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2AB925027598DE9B71D85D08 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				79820A9CB82B0825BD127F03 /* Pods-BitcoinWallet.debug.xcconfig */,
-				2051E128F42FF14A7330AD3B /* Pods-BitcoinWallet.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		E594F3891D4D4C0100CEC105 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				26DE492389282D10746A128A /* libPods-BitcoinWallet.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E5AB5E691D2C24660034B3EF = {
 			isa = PBXGroup;
 			children = (
@@ -115,8 +93,6 @@
 				E5C0286B1D5B9AD50096C791 /* uECC.h */,
 				E5AB5E741D2C24660034B3EF /* BitcoinWallet */,
 				E5AB5E731D2C24660034B3EF /* Products */,
-				E594F3891D4D4C0100CEC105 /* Frameworks */,
-				2AB925027598DE9B71D85D08 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -432,7 +408,6 @@
 		};
 		E5AB5E8A1D2C24660034B3EF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79820A9CB82B0825BD127F03 /* Pods-BitcoinWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
@@ -453,7 +428,6 @@
 		};
 		E5AB5E8B1D2C24660034B3EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2051E128F42FF14A7330AD3B /* Pods-BitcoinWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = NO;
