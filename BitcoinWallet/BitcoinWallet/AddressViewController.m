@@ -71,9 +71,22 @@
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
     
     dispatch_async(balanceQueue, ^{
+        
+        // our BFTASK, if successful, will return the UIImage needed for _qrImage;
         [[self getImageData:_address] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
-            // TODO: Find some use for the bolts callback
-            return nil;
+            if (t.error){
+                // task failed
+                return nil;
+            }else if (t.isCancelled) {
+                // task also failed
+                return nil;
+            } else {
+                // task completed, update image, request redisplay
+                [_qrImage setImage:t.result];
+                [_qrImage setNeedsDisplay];
+                return nil;
+            }
+            
         }];
         
     });
@@ -87,19 +100,15 @@
     
     BFTaskCompletionSource *success = [BFTaskCompletionSource taskCompletionSource];
     NSData *imageData = [NetworkOps getAddressQRCode:_address];
-    
+    // failure condition
     if (imageData == NULL){
-        [success setResult:@"FAILURE"];
+        NSError *defErr = [NSError errorWithDomain:NSURLErrorDomain code:999 userInfo:nil];
+        [success setError:defErr];
         return success.task;
     }
-    
     // set image
-    UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
-    [_qrImage setImage:toAdd];
-    // update the view hierarchy
-    [_qrImage setNeedsDisplay];
-    
-    [success setResult:@"SUCCESS"];
+    UIImage *toAdd = [[[UIImage alloc] initWithData:imageData] retain];
+    [success setResult:toAdd];
     return success.task;
     
 }
