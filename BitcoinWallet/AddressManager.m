@@ -1,21 +1,27 @@
+//******************************************************************************
 //
-//  AddressManager.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/18/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
 #import <Foundation/Foundation.h>
 #include "AddressManager.h"
 
-
-
-@implementation AddressManager : NSObject 
+@implementation AddressManager : NSObject
 
 static AddressManager *globalManager = nil;
 
-
+// Returns singleton global manager
 + (id)globalManager {
     if (globalManager == nil){
         globalManager = [[AddressManager alloc] init];
@@ -24,11 +30,12 @@ static AddressManager *globalManager = nil;
     return globalManager;
 }
 
+// Creates Dummy keypairs for testing purposes
 - (void)createKeyPairsWithDummyData {
     NSString *line1 = [[NSString alloc]initWithFormat:@"bit1,1JdJQftq3kQRTBVBMRJ4dcZe5yBJCuz6MR\n"];
-    NSString *tag1 = [[NSString alloc] initWithFormat:@"TEST1|"];
+    NSString *tag1 = [[NSString alloc] initWithFormat:@"TEST1-"];
     NSString *line2 = [[NSString alloc]initWithFormat:@"bit2,1wuyDWpAzcz84XBWB5WLzHtHxnHb5Kqwo\n"];
-    NSString *tag2 = [[NSString alloc] initWithFormat:@"TEST2|"];
+    NSString *tag2 = [[NSString alloc] initWithFormat:@"TEST2-"];
     [self addKeyPair:line1 withTag:tag1];
     [self addKeyPair:line2 withTag:tag2];
 }
