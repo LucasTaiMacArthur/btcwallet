@@ -12,9 +12,6 @@
 #import <Foundation/Foundation.h>
 #import "AddressManager.h"
 
-#ifndef WINOBJC
-#import <CoreBitcoin/CoreBitcoin.h>
-#endif
 
 
 
