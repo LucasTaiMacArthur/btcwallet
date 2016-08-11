@@ -35,21 +35,40 @@
     
 }
 
-+ (void)getBalanceSimple: (NSString *)address callback: (void(^)(NSInteger)) callback {
++ (double)getBalanceSimple: (NSString *)address {
     
-    NSString *urlString = [NSString stringWithFormat:@"https:/www.blockexplorer.com/api/addr/%@/balance",address];
+    // set up NS
+    NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/addrs/%@/balance",address];
     NSURL *apiURL =  [NSURL URLWithString:urlString];
-    __block NSInteger to_ret = 0;
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:defaultConfig];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:apiURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if(data){
-            NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            to_ret = [str integerValue];
-            callback(to_ret);
-        }
+    NSURLRequest *req = [NSURLRequest requestWithURL:apiURL];
+    
+    
+    __block bool returned = FALSE;
+    __block int strVal = 0;
+    NSURLSessionDataTask *dataTsk = [sessionManager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        NSData *dat = (NSData*)responseObject;
+        NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:dat options:nil error:nil];
+        // the data we want is at /final_balance
+        NSNumber *final_balance = [jsonData valueForKey:@"final_balance"];
+        NSLog(@"VAL WAS %@",final_balance);
+        strVal = [final_balance intValue];
+        returned = TRUE;
+    }];
+    
+    
+    
+    [dataTsk resume];
+    
+    while (!returned) {
+        // busy wait
     }
-                                 ];
-    [tsk resume];
+    
+    return strVal;
+
     
 }
 
@@ -57,20 +76,29 @@
 
 + (NSData *)getAddressQRCode: (NSString *)address  {
     
+    NSLog(@"in call");
     NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&size=300x300",address];
     NSURL *url = [NSURL URLWithString:apiCall];
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:defaultConfig];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    
     __block NSData *to_ret = [[NSData alloc] init];
     __block bool returned = FALSE;
     
-    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if(data){
-            printf("Recieved image data back from qrserver\n");
-            to_ret = [data retain];
-            returned = TRUE;
-        }
-    }
-                                 ];
-    [tsk resume];
+    NSURLSessionDataTask *dataTsk = [sessionManager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        NSLog(@"in completionHandlr %@",error);
+        printf("Recieved image data back from qrserver\n");
+        to_ret = [(NSData*)responseObject retain];
+        returned = TRUE;
+    }];
+    
+    
+
+    [dataTsk resume];
     
     while (!returned) {
         // busy wait
@@ -93,22 +121,15 @@
     // enumerate all addresses
     NSArray<NSString *> *vals = [keypairDict allValues];
     __block long count = [vals count];
-    __block long balance = 0;
+    __block double balance = 0;
     
     for(NSString *val in vals){
         printf("val was %s\n",[val UTF8String]);
         // each ret decrements the counter, increment the balance
-        [self getBalanceSimple:val callback:^(NSInteger test)  {
-            //[lock lock];
-            printf("RET WAS %li\n",(long)test);
-            balance += test;
-            count--;
-            //[lock unlock];
-        }];
+        double add = [self getBalanceSimple:val];
+        balance += add;
+        count--;
     }
-    
-    // busy wait while count is zero
-    while(count > 0){}
     
     
     NSUInteger ret = balance;

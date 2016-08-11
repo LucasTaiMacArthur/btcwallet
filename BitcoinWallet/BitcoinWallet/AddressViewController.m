@@ -71,13 +71,7 @@
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
     
     dispatch_async(balanceQueue, ^{
-        // get the image data
-        NSData *imageData = [NetworkOps getAddressQRCode:_address];
-        // set image
-        UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
-        [_qrImage setImage:toAdd];
-        // update the view hierarchy
-        [_qrImage setNeedsDisplay];
+        [self getImageData:_address];
         
     });
     
@@ -85,6 +79,29 @@
     
     
 }
+
+- (BFTask*)getImageData:(NSString*)addr {
+    
+    BFTaskCompletionSource *success = [BFTaskCompletionSource taskCompletionSource];
+    NSData *imageData = [NetworkOps getAddressQRCode:_address];
+    
+    if (imageData == NULL){
+        [success setResult:@"FAILURE"];
+        return success.task;
+    }
+    
+    // set image
+    UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
+    [_qrImage setImage:toAdd];
+    // update the view hierarchy
+    [_qrImage setNeedsDisplay];
+    
+    [success setResult:@"SUCCESS"];
+    return success.task;
+    
+}
+
+
 
 
 - (void)backButtonPressed {

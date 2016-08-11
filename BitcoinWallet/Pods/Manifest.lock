@@ -14,13 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - Bolts
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
 
-PODFILE CHECKSUM: 4fdc083dc0255a78f226714aa21ddf087838ef76
+PODFILE CHECKSUM: a87eb2e4e63f245d19909b606fc01a7ee46bffb9
 
 COCOAPODS: 1.0.1

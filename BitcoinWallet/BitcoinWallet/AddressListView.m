@@ -44,7 +44,7 @@ static UITextField *winNameField;
     // dummy data
     AddressManager *addressMan = [AddressManager globalManager];
     //[addressMan createKeyPairsWithDummyData];
-    _pairDict = [addressMan getKeyTagMapping];
+    _pairDict = [[addressMan getKeyTagMapping] retain];
     _tableData = [[NSArray arrayWithArray:[_pairDict allKeys]] retain];
     
     // create tableview
@@ -69,10 +69,12 @@ static UITextField *winNameField;
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *contactCellIdent = @"contactCell";
     UITableViewCell *contactCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contactCellIdent];
-    contactCell.textLabel.text = [_tableData objectAtIndex:indexPath.row];
-    
-    
-    
+    NSString *key = [_tableData objectAtIndex:indexPath.row];
+    NSString *addr = [_pairDict objectForKey:key];
+    NSLog(@"ADDR WAS %@",addr);
+    double totalVal = 1;//[NetworkOps getBalanceSimple:addr];
+    NSString *finalLabel = [NSString stringWithFormat:@"%@ - Balance: %.3f BTC",key,totalVal];
+    contactCell.textLabel.text = finalLabel;
     // check in dict if
     
     return contactCell;

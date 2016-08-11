@@ -14,6 +14,7 @@
 #include "AddressViewController.h"
 #include "CryptoOps.h"
 #import "APINetworkOps.h"
+#import "NetworkOps.h"
 
 
 @interface AddressListView : UIViewController <UITableViewDelegate, UITableViewDataSource>

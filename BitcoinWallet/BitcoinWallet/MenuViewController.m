@@ -146,12 +146,12 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[contactsButton]-300-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[contactsButton]-200-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-193-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];

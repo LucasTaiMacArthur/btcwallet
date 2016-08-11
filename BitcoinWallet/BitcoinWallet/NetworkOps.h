@@ -10,12 +10,14 @@
 #define NetworkOps_h
 
 #import "MainViewController.h"
+#import "AFNetworking.h"
 
 @interface NetworkOps : NSObject
 @property (atomic) int threadCount;
 
 + (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
 + (NSData*)getAddressQRCode:(NSString *)address;
++ (double)getBalanceSimple: (NSString *)address;
 + (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
 
 @end
