@@ -16,7 +16,8 @@
 
 + (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
 + (NSData*)getAddressQRCode:(NSString *)address;
-+ (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
++ (double)getBalanceSimple: (NSString *)address;
++ (double)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
 
 @end
 

@@ -20,21 +20,21 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
 
 
 - (void)viewDidLoad {
-        
+    
     self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     
     self.makePaymentButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.makePaymentButton.layer.borderWidth = 1;
     self.makePaymentButton.layer.cornerRadius = 15;
     self.makePaymentButton.clipsToBounds = TRUE;
-
+    
     self.makePaymentButton.backgroundColor = [UIColor colorWithRed:(0x87/255.0f) green:(0xd3/255.0f) blue:(0x7c/255.0f) alpha:1.0];
     [self.makePaymentButton setTitle:kMakePaymentString
-                       forState:UIControlStateNormal];
+                            forState:UIControlStateNormal];
     [self.makePaymentButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.makePaymentButton addTarget:self
-                          action:@selector(transationButtonPressed)
-                forControlEvents:UIControlEventTouchUpInside];
+                               action:@selector(transationButtonPressed)
+                     forControlEvents:UIControlEventTouchUpInside];
     [self.makePaymentButton sizeToFit];
     self.makePaymentButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.makePaymentButton.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -45,7 +45,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     self.myAddressesButton.layer.borderWidth = 1;
     self.myAddressesButton.layer.cornerRadius = 15;
     self.myAddressesButton.clipsToBounds = TRUE;
-
+    
     self.myAddressesButton.backgroundColor = [UIColor colorWithRed:(0xf1/255.0f) green:(0xa9/255.0f) blue:(0xa0/255.0f) alpha:1.0];
     self.myAddressesButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.myAddressesButton.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -61,17 +61,17 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     self.myContactsButton.layer.borderWidth = 1;
     self.myContactsButton.layer.cornerRadius = 15;
     self.myContactsButton.clipsToBounds = TRUE;
-
+    
     self.myContactsButton.backgroundColor = [UIColor colorWithRed:(0xf5/255.0f) green:(0xd7/255.0f) blue:(0x6e/255.0f) alpha:1.0];
     [self.myContactsButton setTitle:kContactsButtonString
-                            forState:UIControlStateNormal];
+                           forState:UIControlStateNormal];
     self.myContactsButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.myContactsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-	[self.myContactsButton sizeToFit];
+    [self.myContactsButton sizeToFit];
     [self.myContactsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myContactsButton addTarget:self
-                               action:@selector(contactButtonPressed)
-                     forControlEvents:UIControlEventTouchUpInside];
+                              action:@selector(contactButtonPressed)
+                    forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myContactsButton];
     
     self.myTransactionsButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -80,11 +80,11 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     self.myTransactionsButton.clipsToBounds = TRUE;
     self.myTransactionsButton.backgroundColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
     [self.myTransactionsButton setTitle:kTransactionsButtonString
-                            forState:UIControlStateNormal];
+                               forState:UIControlStateNormal];
     [self.myTransactionsButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.myTransactionsButton addTarget:self
-                               action:@selector(transactionListButtonPressed)
-                     forControlEvents:UIControlEventTouchUpInside];
+                                  action:@selector(transactionListButtonPressed)
+                        forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myTransactionsButton];
     
     
@@ -96,45 +96,45 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                              @"addressesButton" : self.myAddressesButton,
                              @"transactionsButton" : self.myTransactionsButton
                              };
-
-	// These constraints display well on Windows UWP devices
-	#ifdef WINOBJC
-
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-300-|"
+    
+    // These constraints display well on Windows UWP devices
+#ifdef WINOBJC
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-300-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[paymentButton]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[paymentButton]-50-|"
                                                                       options:0
                                                                       metrics:metrics
-																	  views:views]];
+                                                                        views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-170-[contactsButton]-225-|"
                                                                       options:0
                                                                       metrics:metrics
-                                                                        views:views]];                                                                  
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-50-|"
+                                                                        views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-50-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-250-[addressesButton]-150-|"
-                                                                      options:0
-                                                                      metrics:metrics
-                                                                        views:views]];                                                                  
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[addressesButton]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-250-[addressesButton]-150-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[transactionsButton]-100-|"
-                                                                      options:0
-                                                                      metrics:metrics
-                                                                        views:views]];                                                                  
-	[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[transactionsButton]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[addressesButton]-50-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-	#endif 
-	// These constraints display well on iOS 
-	#ifndef WINOBJC
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[transactionsButton]-100-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[transactionsButton]-50-|"
+                                                                      options:0
+                                                                      metrics:metrics
+                                                                        views:views]];
+#endif
+    // These constraints display well on iOS
+#ifndef WINOBJC
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-350-|"
                                                                       options:0
@@ -146,12 +146,12 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[contactsButton]-300-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-325-[contactsButton]-200-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-50-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contactsButton]-193-|"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
@@ -174,28 +174,24 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-    #endif
+#endif
     
     dispatch_queue_t balanceQueue = dispatch_queue_create("Balance Queue",NULL);
     
     dispatch_async(balanceQueue, ^{
-
-		#ifndef WINOBJC
         // get addresses
         NSDictionary *addresses = [[AddressManager globalManager] getKeyPairs];
-        // get the integer (there are 100mil satoshi to a bitcoin)
-        NSUInteger balanceInSatoshi = [NetworkOps returnBalanceFromAddresses:addresses];
-        double balanceInBTC = (balanceInSatoshi / 100000000.0f);
+        // get the double (there are 100mil satoshi to a bitcoin)
+        double balanceInSatoshi = [NetworkOps returnBalanceFromAddresses:addresses];
+        double balanceInBTC = (balanceInSatoshi /100000000.0f);
         // update the string
-        kMakePaymentString = [NSString stringWithFormat:@"Make Payment\n\nBalance: %.2fBTC",balanceInBTC];
+        kMakePaymentString = [NSString stringWithFormat:@"Make Payment\nBalance: %.2fBTC",balanceInBTC];
         // update the view hierarchy
         [self.makePaymentButton setTitle:kMakePaymentString forState:UIControlStateNormal];
         [self.makePaymentButton setNeedsDisplay];
-
-		#endif
     });
-
-
+    
+    
     
     
 }

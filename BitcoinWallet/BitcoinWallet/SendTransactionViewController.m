@@ -23,7 +23,7 @@
     
     // set contact info
     ContactManager *cm = [ContactManager globalManager];
-    _contactData = [cm getKeyPairs];
+    _contactData = [[cm getKeyPairs] retain];
     _pickerData = [[_contactData allKeys] retain];
     
     // set address info
@@ -86,22 +86,12 @@
     [self.addressPicker setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.addressPicker];
 	
-	// set up text field
-    self.amountField = [[UITextField alloc] init];
-    [self.amountField setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.amountField.textAlignment = NSTextAlignmentCenter;
-    self.amountField.layer.borderWidth = 1;
-    self.amountField.placeholder = @"Enter Amount in BTC";
-    [self.amountField setKeyboardType:UIKeyboardTypeDecimalPad];
-    [self.view addSubview:self.amountField];
-
 
 	// looks good on ios
 	#ifndef WINOBJC
 	// set platform agnostic constraints
     NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
     NSDictionary *views = @{ @"amount" : self.amountField,
-                             @"btc" : self.btcLabel,
                              @"to" : self.toLabel,
                              @"contact" : self.contactPicker,
                              @"address" : self.addressPicker
@@ -109,21 +99,12 @@
     
 
 
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[btc][contact]"
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[contact]-10-[to][address][amount]"
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[contact]-10-[to][address][amount]"
-                                                                      options:0
-                                                                      metrics:metrics
-                                                                        views:views]];
-    
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[btc]-50-|"
-                                                                      options:0
-                                                                      metrics:metrics
-                                                                        views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-50-[contact]-50-|"
                                                                       options:0
                                                                       metrics:metrics

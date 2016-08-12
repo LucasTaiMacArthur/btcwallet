@@ -44,7 +44,7 @@ static UITextField *winNameField;
     // dummy data
     AddressManager *addressMan = [AddressManager globalManager];
     //[addressMan createKeyPairsWithDummyData];
-    _pairDict = [addressMan getKeyTagMapping];
+    _pairDict = [[addressMan getKeyTagMapping] retain];
     _tableData = [[NSArray arrayWithArray:[_pairDict allKeys]] retain];
     
     // create tableview
@@ -55,11 +55,11 @@ static UITextField *winNameField;
     [_mainTable setDataSource:self];
     _mainTable.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     [self.view addSubview:_mainTable];
-
     
-
-
-
+    
+    
+    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -69,10 +69,14 @@ static UITextField *winNameField;
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *contactCellIdent = @"contactCell";
     UITableViewCell *contactCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contactCellIdent];
-    contactCell.textLabel.text = [_tableData objectAtIndex:indexPath.row];
-    
-    
-    
+    NSString *key = [_tableData objectAtIndex:indexPath.row];
+    NSString *addr = [_pairDict objectForKey:key];
+    NSLog(@"ADDR WAS %@",addr);
+    // 100mil satoshi to btc
+    double totalVal = [NetworkOps getBalanceSimple:addr];
+    double totalValBTC = (totalVal / 100000000.0f);
+    NSString *finalLabel = [NSString stringWithFormat:@"%@ - %.2f BTC",key,totalValBTC];
+    contactCell.textLabel.text = finalLabel;
     // check in dict if
     
     return contactCell;
@@ -91,22 +95,22 @@ static UITextField *winNameField;
     [toShow setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:toShow animated:YES completion:^{
     }];
-
+    
     
 }
 
 - (void)addNewAddressPressed {
-
-	#ifndef WINOBJC
-
+    
+#ifndef WINOBJC
+    
     UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create New Address" message:@"Provide a nickname for this address" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // get string pair
         UITextField *addressName = (UITextField*)newAddress.textFields.firstObject;
         NSString *newTag = addressName.text;
-		if(newTag == NULL) {
-				return;
-		}
+        if(newTag == NULL) {
+            return;
+        }
         [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
         // add kp to the manager
         [self.view setNeedsDisplay];
@@ -123,42 +127,42 @@ static UITextField *winNameField;
     [self presentViewController:newAddress animated:YES completion:^{
         // nothing
     }];
-	#endif 
-
-	#ifdef WINOBJC
-	// windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
-	// The correct mapping is content dialog
-	WXCContentDialog *alert = [WXCContentDialog make];
-	alert.primaryButtonText = @"Accept";
-	alert.secondaryButtonText = @"Reject";
-
-	// put a text block as the title
-	WXCTextBlock *title = [WXCTextBlock make];
-	title.text = @"Create New Address";
-	alert.title = title;
-
-	// put a text box in as the content
-	WXCTextBox* textBox = [WXCTextBox make];
-	textBox.placeholderText = @"Type an Address Nickname";
-	alert.content = textBox;
-
-	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
-		//  if accept is pressed (WXCContentDialogResult.WXCContentDialogResultPrimary = 1)
-		if (success == 1){
-			// grab the text box's data, make a new address with that name
-			NSString *newTag = textBox.text;
-			// if string is null it's no good
-			if(newTag == NULL) {
-				return;
-			}
-			[APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
-		}
-	} failure:^(NSError* failure) {
-		// nope
-	}];
+#endif
     
-	#endif
-
+#ifdef WINOBJC
+    // windows code because UIALERTCONTROLLER as above is not valid. UIAlertView Text Fields aren't supported by IW yet
+    // The correct mapping is content dialog
+    WXCContentDialog *alert = [WXCContentDialog make];
+    alert.primaryButtonText = @"Accept";
+    alert.secondaryButtonText = @"Reject";
+    
+    // put a text block as the title
+    WXCTextBlock *title = [WXCTextBlock make];
+    title.text = @"Create New Address";
+    alert.title = title;
+    
+    // put a text box in as the content
+    WXCTextBox* textBox = [WXCTextBox make];
+    textBox.placeholderText = @"Type an Address Nickname";
+    alert.content = textBox;
+    
+    [alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+        //  if accept is pressed (WXCContentDialogResult.WXCContentDialogResultPrimary = 1)
+        if (success == 1){
+            // grab the text box's data, make a new address with that name
+            NSString *newTag = textBox.text;
+            // if string is null it's no good
+            if(newTag == NULL) {
+                return;
+            }
+            [APINetworkOps generateAddressAndAddToAddressManagerWithTag:newTag];
+        }
+    } failure:^(NSError* failure) {
+        // nope
+    }];
+    
+#endif
+    
 }
 
 

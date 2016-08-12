@@ -209,7 +209,9 @@ static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
         
         printf("data returned\n");
         NSError *err;
-        NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"STR WAS \n %@ \n",str);
+        NSDictionary *jsonData = [(NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:&err] retain];
         if (err){
             printf("error\n");
             retVal = [[NSDictionary alloc]init];

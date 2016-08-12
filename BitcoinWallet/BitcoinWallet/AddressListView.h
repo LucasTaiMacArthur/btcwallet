@@ -13,6 +13,7 @@
 #include "AddressManager.h"
 #include "AddressViewController.h"
 #include "CryptoOps.h"
+#import "NetworkOps.h"
 #import "APINetworkOps.h"
 
 
