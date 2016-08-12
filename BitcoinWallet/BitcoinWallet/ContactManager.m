@@ -1,20 +1,25 @@
+//******************************************************************************
 //
-//  AddressManager.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/18/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
 #import <Foundation/Foundation.h>
 #include "ContactManager.h"
 
-
-
 @implementation ContactManager : NSObject
 
 static ContactManager *globalManager = nil;
-
 
 + (id)globalManager {
     if (globalManager == nil){
@@ -24,6 +29,7 @@ static ContactManager *globalManager = nil;
     return globalManager;
 }
 
+// create dummy data
 - (void)createKeyPairsWithDummyData {
     NSString *line1 = [[NSString alloc]initWithFormat:@"testNetAddr,mv8x2Z64QHWEqi1STgyE3CaLUoiagebTFU\n"];
     [self addKeyPair:line1];
@@ -38,13 +44,10 @@ static ContactManager *globalManager = nil;
     NSString *fileurl = [docurl stringByAppendingString:@"/contacts.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
-	NSLog(@"%@",csvString);
-    printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];
-    printf("Array Size is %lu",(unsigned long)[splitString count]);
     
     NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
     
@@ -70,27 +73,15 @@ static ContactManager *globalManager = nil;
     NSMutableData *concatData = [NSMutableData dataWithData:dat1];
     [concatData appendData:toWrite];
     
-    
     // remove keypair file if it exists
     if ([fileman fileExistsAtPath:fileurl]) {
-        printf("I've removed the file?\n");
         [fileman removeItemAtPath:fileurl error:nil];
     }
     
-    
     // write new file with full data
     BOOL filecreat = [fileman createFileAtPath:fileurl contents:concatData attributes:nil];
-    if (filecreat) {
-        printf("Success - file written\n");
-    }else {
-        printf("Failure! - file not written\n");
-    }
-    
     return 1;
 }
-
-
-
 
 @end
 

@@ -10,11 +10,18 @@
 #define AddressListView_h
 
 #include <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #include "AddressManager.h"
 #include "AddressViewController.h"
 #include "CryptoOps.h"
 #import "NetworkOps.h"
 #import "APINetworkOps.h"
+// import ui/notifcations for the toast if we are on a windows system
+#ifdef WINOBJC
+#import <UWP/WindowsUIXamlControls.h>
+#import <UWP/WindowsDataXmlDom.h>
+#endif
+
 
 
 @interface AddressListView : UIViewController <UITableViewDelegate, UITableViewDataSource>

@@ -1,16 +1,25 @@
+//******************************************************************************
 //
-//  NetworkOps.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/8/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
 #import <Foundation/Foundation.h>
 #include "NetworkOps.h"
 
 @implementation NetworkOps : NSObject 
 
+// get string balance of 
 + (NSString *)getAddressBalance: (NSString *)address changeWithLabel:(UILabel *)label {
     
     NSString *urlString = [NSString stringWithFormat:@"https:/www.blockexplorer.com/api/addr/%@/balance",address];
@@ -22,16 +31,11 @@
             to_ret = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSString *str = [NSString stringWithFormat:@"Address Balance: %@",to_ret];
             label.text = str;
-            
-            
             }
         }
     ];
     [tsk resume];
-    
-    
-    
-    return to_ret;
+	return to_ret;
     
 }
 
@@ -52,16 +56,11 @@
             strVal = [final_balance doubleValue];
             returned = TRUE;
         }
-    }
-                                 ];
+    }];
 
     
     [tsk resume];
-    
-    while (!returned) {
-        // busy wait
-    }
-    
+    while (!returned) {}
     return strVal;
     
     
@@ -83,16 +82,12 @@
             to_ret = [data retain];
             returned = TRUE;
         }
-    }
-                                 ];
+    }];
     [tsk resume];
     
     while (!returned) {
         // busy wait
     }
-    
-    
-    
     return to_ret;
     
 }
@@ -103,9 +98,7 @@
 
 + (double)returnBalanceFromAddresses:(NSDictionary*)keypairDict {
     
-    
-    
-    // enumerate all addresses
+	// enumerate all addresses
     NSArray<NSString *> *vals = [keypairDict allValues];
     __block long count = [vals count];
     __block long balance = 0;
@@ -119,9 +112,6 @@
     
     // busy wait while count is zero
     while(count > 0){}
-    
-    
-    
     return balance;
 }
 

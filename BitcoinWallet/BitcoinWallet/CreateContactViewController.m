@@ -1,11 +1,20 @@
+//******************************************************************************
 //
-//  CreateContactViewController.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/24/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
+// this doesn't work in iOS
 #import <Foundation/Foundation.h>
 #import "CreateContactViewController.h"
 
@@ -15,11 +24,8 @@
 - (void)viewDidLoad{
 	
 	#ifndef WINOBJC
-
     [super viewDidLoad];
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
     
@@ -28,13 +34,10 @@
     AVCaptureDevice *frontCam = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *err = nil;
     AVCaptureDeviceInput *camInput = [AVCaptureDeviceInput deviceInputWithDevice:frontCam error:&err];
-    
     // start the capture session
     [captureSession addInput:camInput];
     
     dispatch_queue_t delegateQ = dispatch_queue_create("delQ",NULL);
-    
-    
     // attach metadata output to the session
     AVCaptureMetadataOutput *qrOut = [[AVCaptureMetadataOutput alloc] init];
     [captureSession addOutput:qrOut];
@@ -47,7 +50,6 @@
     
     
     // add navbar item with buttons
-    
     UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:@"Scan Contact QR"];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     staticItem.leftBarButtonItem = backButton;

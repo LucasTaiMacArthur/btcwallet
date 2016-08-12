@@ -1,17 +1,25 @@
+//******************************************************************************
 //
-//  ContactViewController.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/22/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
 #import <Foundation/Foundation.h>
 #import "ContactViewController.h"
 
 @implementation ContactViewController
 
-
+// create contact with view controller
 + (id)initWithName:(NSString*)nameStr andAddress:(NSString*)qrStr {
     ContactViewController *cvc = [[ContactViewController alloc] init];
     cvc.name = nameStr;
@@ -22,17 +30,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+	self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
 
-    self.view.backgroundColor = [UIColor whiteColor];
-
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
+	#ifdef WINOBJC
+	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
+	#endif
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
     
     // add navbar item with buttons
-    
     UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:_name];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     staticItem.leftBarButtonItem = backButton;
@@ -64,7 +73,7 @@
     
     
     
-
+	// async get the qr image
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
     
     dispatch_async(balanceQueue, ^{

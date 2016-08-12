@@ -1,10 +1,18 @@
+//******************************************************************************
 //
-//  SendTransactionViewController.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/25/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
 #import <Foundation/Foundation.h>
 #import "SendTransactionViewController.h"
@@ -20,6 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+	#ifdef WINOBJC
+	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
+	#endif
+
     
     // set contact info
     ContactManager *cm = [ContactManager globalManager];
@@ -42,6 +55,12 @@
     
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
+
+	// navbar should sit on top of app frame, no status bar to worry about in UWP
+	#ifdef WINOBJC
+	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
+	#endif
+
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
     
     // add navbar item with buttons
@@ -69,6 +88,7 @@
     self.toLabel = [[UILabel alloc] init];
     self.toLabel.text = @"FROM";
     self.toLabel.font = [UIFont systemFontOfSize:25];
+	self.toLabel.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     [self.toLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.toLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.toLabel];
@@ -77,6 +97,7 @@
     self.fromLabel = [[UILabel alloc] init];
     self.fromLabel.text = @"TO";
     self.fromLabel.font = [UIFont systemFontOfSize:25];
+	self.fromLabel.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     [self.fromLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.fromLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.fromLabel];
@@ -139,18 +160,34 @@
 
 - (void)sendPaymentPressed {
 
-	
+	// if no contacts or no from addresses
+	if ([_pickerData count] == 0 || [_pickerDataAddresses count] == 0) {
+		[self sendErrorMsg];
+		return;
+	}
+
+	// if null amount or amount isn't a number
+	NSString *amountString = [_amountField text];
+	if (amountString == NULL) {
+		[self sendErrorMsg];
+		return;
+	}
+
+	if ([amountString doubleValue] == 0.0) {
+		[self sendErrorMsg];
+		return;
+	}
+
 
     NSString *pickerContact = [self pickerView:_contactPicker titleForRow:[_contactPicker selectedRowInComponent:0] forComponent:0];
     NSString *pickerAddress = [self pickerView:_addressPicker titleForRow:[_addressPicker selectedRowInComponent:0] forComponent:0];
     NSString *paymentMessage = [NSString stringWithFormat:@"Confirm you want to send %@ BTC from your address \"%@\" \nto your contact \"%@\"\n",_amountField.text, pickerAddress, pickerContact];
 	NSLog(@"%@",paymentMessage);
 
-	NSString *amountString = [_amountField text];
-
 	// ERROR CHECKING - PLATFORM AGNOSTIC
 	// Checks for null to,from,amount
-	if (pickerContact == NULL || pickerAddress == NULL || amountString == NULL) {
+	if (pickerContact == NULL || pickerAddress == NULL) {
+		[self sendErrorMsg];
 		return;
 	}
 	// TODO: checks if amount string is a valid number (no double decimals)
@@ -372,6 +409,34 @@
 	self.fromLabel.frame = [self calcFromLabelFrame];
 } 
 #endif
+
+
+- (void)sendErrorMsg {
+	
+	#ifdef WINOBJC
+	WXCContentDialog *alert = [WXCContentDialog make];
+	alert.primaryButtonText = @"OK";
+
+	// put a text block as the title
+	WXCTextBlock *title = [WXCTextBlock make];
+	title.text = @"Error - Incorrect Params";
+	alert.title = title;
+
+	// put a text box in as the content
+	WXCTextBlock* contentText = [WXCTextBlock make];
+	contentText.text = @"There was an error in your payment\nFix the parameters and try again";
+	contentText.maxLines = 2;
+	alert.content = contentText;
+
+	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+	} failure:^(NSError* failure) {
+		// nope
+	}];
+
+	#endif
+
+
+}
 
 
 
