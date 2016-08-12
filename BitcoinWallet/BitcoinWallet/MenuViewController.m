@@ -179,18 +179,36 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     dispatch_queue_t balanceQueue = dispatch_queue_create("Balance Queue",NULL);
     
     dispatch_async(balanceQueue, ^{
+		#ifndef WINOBJC
         // get addresses
         NSDictionary *addresses = [[AddressManager globalManager] getKeyPairs];
         // get the double (there are 100mil satoshi to a bitcoin)
         double balanceInSatoshi = [NetworkOps returnBalanceFromAddresses:addresses];
         double balanceInBTC = (balanceInSatoshi /100000000.0f);
+		NSLog(@"Bal in btc was %f",balanceInBTC);
         // update the string
         kMakePaymentString = [NSString stringWithFormat:@"Make Payment\nBalance: %.2fBTC",balanceInBTC];
+		NSLog(@"str was %@",kMakePaymentString);
         // update the view hierarchy
         [self.makePaymentButton setTitle:kMakePaymentString forState:UIControlStateNormal];
         [self.makePaymentButton setNeedsDisplay];
+		#endif
     });
     
+	#ifdef WINOBJC
+	// get addresses
+    NSDictionary *addresses = [[AddressManager globalManager] getKeyPairs];
+    // get the double (there are 100mil satoshi to a bitcoin)
+    double balanceInSatoshi = [NetworkOps returnBalanceFromAddresses:addresses];
+    double balanceInBTC = (balanceInSatoshi /100000000.0f);
+	NSLog(@"Bal in btc was %f",balanceInBTC);
+    // update the string
+    kMakePaymentString = [NSString stringWithFormat:@"Make Payment\nBalance: %.2fBTC",balanceInBTC];
+	NSLog(@"str was %@",kMakePaymentString);
+    // update the view hierarchy
+    [self.makePaymentButton setTitle:kMakePaymentString forState:UIControlStateNormal];
+    [self.makePaymentButton setNeedsDisplay];
+	#endif
     
     
     

@@ -1,6 +1,7 @@
 /* Copyright 2014, Kenneth MacKay. Licensed under the BSD 2-clause license. */
 
 #include <stddef.h>
+#include <stdlib.h>
 #include "uECC.h"
 
 #ifndef uECC_PLATFORM
@@ -324,6 +325,8 @@ static void vli_modSquare_fast(uECC_word_t *p_result, uECC_word_t *p_left);
 
 static int default_RNG(uint8_t *p_dest, unsigned p_size)
 {
+
+	/*
     HCRYPTPROV l_prov;
     if(!CryptAcquireContext(&l_prov, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
     {
@@ -333,6 +336,12 @@ static int default_RNG(uint8_t *p_dest, unsigned p_size)
     CryptGenRandom(l_prov, p_size, (BYTE *)p_dest);
     CryptReleaseContext(l_prov, 0);
     
+	*/
+	for (int i = 0; i < p_size; i++) {
+		uint8_t randByte = rand()%(UINT8_MAX);
+		p_dest[i] = randByte;
+	}
+
     return 1;
 }
 
@@ -1278,7 +1287,7 @@ static void omega_mult(uint32_t * RESTRICT p_result, uint32_t * RESTRICT p_right
 {
     /* Multiply by (2^9 + 2^8 + 2^7 + 2^6 + 2^4 + 1). */
     uint32_t l_carry = 0;
-    uint i;
+    unsigned int i;
     for(i=0; i<uECC_WORDS; ++i)
     {
         uint64_t p = (uint64_t)0x3D1 * p_right[i] + l_carry;

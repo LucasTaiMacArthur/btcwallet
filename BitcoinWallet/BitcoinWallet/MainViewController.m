@@ -127,6 +127,7 @@ static NSDictionary *contacts;
 		if (success == 1){
 			// grab the text box's data, make a new address with that name
 			NSString *newTag = nameBox.text;
+			NSString *finalString = [NSString stringWithFormat:@"%@\n",newTag];
 
 			// if nothing put in, quit
 			if (newTag == NULL) {
@@ -137,7 +138,7 @@ static NSDictionary *contacts;
 
 			// get contact man, put split string in
 			ContactManager *con = [ContactManager globalManager];
-			[con addKeyPair:newTag];
+			[con addKeyPair:finalString];
 		}
 	} failure:^(NSError* failure) {
 		// nope

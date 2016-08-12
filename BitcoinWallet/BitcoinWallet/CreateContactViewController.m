@@ -13,6 +13,9 @@
 
 
 - (void)viewDidLoad{
+	
+	#ifndef WINOBJC
+
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -104,12 +107,14 @@
     // start the camera
     [captureSession startRunning];
     
-    
+    #endif
     
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     
+	#ifndef WINOBJC
+
     // check for empty array
     if(metadataObjects.count == 0){
         return;
@@ -153,6 +158,8 @@
         
     }
     
+	#endif
+
 }
 
 - (void)backButtonPressed {

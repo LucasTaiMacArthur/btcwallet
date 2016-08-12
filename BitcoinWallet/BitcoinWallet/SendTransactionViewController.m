@@ -70,8 +70,16 @@
     self.toLabel.text = @"FROM";
     self.toLabel.font = [UIFont systemFontOfSize:25];
     [self.toLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.toLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.toLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.toLabel];
+
+	// set up text block
+    self.fromLabel = [[UILabel alloc] init];
+    self.fromLabel.text = @"TO";
+    self.fromLabel.font = [UIFont systemFontOfSize:25];
+    [self.fromLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.fromLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.view addSubview:self.fromLabel];
     
     // set up the contact spinner
     self.contactPicker = [[UIPickerView alloc]init];
@@ -324,21 +332,35 @@
 - (CGRect)calcContactPickerFrame {
 	CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-	CGRect contactFrame = CGRectMake(75,110,frameWidth-150,200);
+	CGRect contactFrame = CGRectMake(200,180,50,100);
 	return contactFrame;
 }
 
 - (CGRect)calcAddressPickerFrame {
 	CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-	CGRect contactFrame = CGRectMake(75,225,frameWidth-150,250);
+	CGRect contactFrame = CGRectMake(200,300,50,100);
+	return contactFrame;
+}
+
+- (CGRect)calcToLabelFrame {
+	CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+	CGRect contactFrame = CGRectMake(50,205,75,50);
+	return contactFrame;
+}
+
+- (CGRect)calcFromLabelFrame {
+	CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+	CGRect contactFrame = CGRectMake(50,315,75,50);
 	return contactFrame;
 }
 
 - (CGRect)calcAmountFieldFrame {
 	CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-	CGRect contactFrame = CGRectMake(25,50,frameWidth-50,75);
+	CGRect contactFrame = CGRectMake(25,75,frameWidth-50,100);
 	return contactFrame;
 }
 
@@ -346,6 +368,8 @@
 	self.contactPicker.frame = [self calcContactPickerFrame];
 	self.addressPicker.frame = [self calcAddressPickerFrame];
 	self.amountField.frame = [self calcAmountFieldFrame];
+	self.toLabel.frame = [self calcToLabelFrame];
+	self.fromLabel.frame = [self calcFromLabelFrame];
 } 
 #endif
 
