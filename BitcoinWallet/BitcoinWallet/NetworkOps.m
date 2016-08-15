@@ -78,7 +78,6 @@
     
     NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if(data){
-            printf("Recieved image data back from qrserver\n");
             to_ret = [data retain];
             returned = TRUE;
         }
@@ -93,7 +92,6 @@
 }
 
 + (void)myCallback:(NSInteger)test {
-    printf("Got Callback was: %li\n",(long)test);
 }
 
 + (double)returnBalanceFromAddresses:(NSDictionary*)keypairDict {

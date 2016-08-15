@@ -123,9 +123,7 @@
     }
     AVMetadataMachineReadableCodeObject *qr = [metadataObjects objectAtIndex:0];
     if (qr.type == AVMetadataObjectTypeQRCode) {
-        NSString *addrString = qr.stringValue;
-        printf("THE QR CODE READ %s\n",[qr.stringValue UTF8String]);
-        
+        NSString *addrString = qr.stringValue;        
         UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create Contact" message:@"Provide a name for this contact" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             // get string pair

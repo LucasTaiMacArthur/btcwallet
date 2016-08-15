@@ -19,7 +19,7 @@
 @implementation APINetworkOps : NSObject
 
 // API Access token for blockcypher restful api
-static NSString* apiAccessToken = @"e3301fb09644454b9609fc6634fb0fe8";
+static NSString* apiAccessToken = @"YOUR_BLOCKCYPHER_TOKEN_HERE";
 
 + (void)generateAddressAndAddToAddressManagerWithTag:(NSString*)tag {
   

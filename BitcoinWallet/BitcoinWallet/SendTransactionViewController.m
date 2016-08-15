@@ -44,9 +44,6 @@
     _addressData = [am getKeyTagMapping];
     _pickerDataAddresses = [[_addressData allKeys] retain];
     
-    printf("picker data cnt is %lu\n",(unsigned long)[_pickerData count]);
-
-    
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
     
@@ -203,7 +200,6 @@
         NSNumber *amount = [NSNumber numberWithDouble:amountInSatoshi];
         NSString *inputAddr = [_addressData objectForKey:pickerAddress];
         NSString *outputAddr = [_contactData objectForKey:pickerContact];
-        printf("about to make an api call with addresses %s | %s  for amount %f\n",[inputAddr UTF8String],[outputAddr UTF8String],amountInSatoshi);
         NSData *skele = [[APINetworkOps generatePartialTXWithInput:inputAddr andOutput:outputAddr andValue:amount] retain];
         NSString *partialTx = [APINetworkOps getTXSkeletonWithData:skele];
         
@@ -279,7 +275,6 @@
         NSNumber *amount = [NSNumber numberWithDouble:amountInSatoshi];
         NSString *inputAddr = [_addressData objectForKey:pickerAddress];
         NSString *outputAddr = [_contactData objectForKey:pickerContact];
-        printf("about to make an api call with addresses %s | %s  for amount %f\n",[inputAddr UTF8String],[outputAddr UTF8String],amountInSatoshi);
         NSData *skele = [[APINetworkOps generatePartialTXWithInput:inputAddr andOutput:outputAddr andValue:amount] retain];
         NSString *partialTx = [APINetworkOps getTXSkeletonWithData:skele];
         

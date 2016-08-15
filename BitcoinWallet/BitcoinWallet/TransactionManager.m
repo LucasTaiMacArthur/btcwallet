@@ -58,16 +58,15 @@ static TransactionManager *globalManager;
     
     // remove file if it exists
     if ([fileman fileExistsAtPath:fileurl]) {
-        printf("I've removed the file?\n");
         [fileman removeItemAtPath:fileurl error:nil];
     }
     
     // write new file with full data
     BOOL filecreat = [fileman createFileAtPath:fileurl contents:concatData attributes:nil];
     if (filecreat) {
-        printf("Success - file written\n");
+		return 1;
     }else {
-        printf("Failure! - file not written\n");
+		return 0;
     }
     
     return 1;
@@ -82,12 +81,10 @@ static TransactionManager *globalManager;
     NSString *fileurl = [docurl stringByAppendingString:@"/transactions.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
-    printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];
-    printf("Array Size is %lu",(unsigned long)[splitString count]);
     
     NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
     
@@ -109,12 +106,10 @@ static TransactionManager *globalManager;
     NSString *fileurl = [docurl stringByAppendingString:@"/transactions.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
-    printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];
-    printf("Array Size is %lu",(unsigned long)[splitString count]);
     
     NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
     
@@ -136,12 +131,10 @@ static TransactionManager *globalManager;
     NSString *fileurl = [docurl stringByAppendingString:@"/transactions.txt"];
     NSData *pwdData = [fileman contentsAtPath:fileurl];
     NSString *csvString = [[NSString alloc]initWithData:pwdData encoding:NSUTF8StringEncoding];
-    printf("%s\n",[csvString UTF8String]);
     
     NSCharacterSet *splitSet = [NSCharacterSet characterSetWithCharactersInString:@"\n,"];
     NSArray *splitString = [[NSArray alloc] init];
     splitString = [csvString componentsSeparatedByCharactersInSet:splitSet];
-    printf("Array Size is %lu",(unsigned long)[splitString count]);
     
     NSMutableSet *returnSet = [[NSMutableSet alloc] init];
     

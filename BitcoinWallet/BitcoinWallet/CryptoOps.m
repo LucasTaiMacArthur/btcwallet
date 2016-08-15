@@ -55,8 +55,6 @@
     
     NSString *signedHasAsString = [self dataToHexEncodedString:signedHash];
     
-    printf("\nSigned Hash was %s\n",[signedHasAsString UTF8String]);
-    
     return signedHasAsString;
 }
 
