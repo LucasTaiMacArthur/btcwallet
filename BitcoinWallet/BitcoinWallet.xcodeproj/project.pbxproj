@@ -13,7 +13,6 @@
 		E5270CD51D5D2E45005648C5 /* DEREncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = E5270CD31D5D2E45005648C5 /* DEREncoder.m */; };
 		E5270CD61D5D2E45005648C5 /* uECC.c in Sources */ = {isa = PBXBuildFile; fileRef = E5270CD41D5D2E45005648C5 /* uECC.c */; };
 		E55732F01D2EC31D00EC416A /* CryptoOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E55732EF1D2EC31D00EC416A /* CryptoOps.m */; };
-		E5789F131D3D454B009670CF /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5789F121D3D454B009670CF /* AddressManager.m */; };
 		E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E57928AB1D34486000FF77D4 /* MainViewController.m */; };
 		E580F49D1D492DDC00500780 /* APINetworkOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E580F49C1D492DDC00500780 /* APINetworkOps.m */; };
 		E58869B01D4D78B6005663CC /* TransactionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58869AF1D4D78B6005663CC /* TransactionListViewController.m */; };
@@ -27,6 +26,7 @@
 		E5C4B5481D46EDBE0008EC1A /* AddressListView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4B5471D46EDBE0008EC1A /* AddressListView.m */; };
 		E5D4989C1D46F7EB00C605DB /* TransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D4989B1D46F7EB00C605DB /* TransactionManager.m */; };
 		E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE67A61D304F5A00BEF981 /* NetworkOps.m */; };
+		E5F31DF01D6388010033BF51 /* AddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F31DEE1D6388010033BF51 /* AddressManager.m */; };
 		E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,6 @@
 		E5270CD41D5D2E45005648C5 /* uECC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uECC.c; sourceTree = "<group>"; };
 		E55732EF1D2EC31D00EC416A /* CryptoOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoOps.m; sourceTree = "<group>"; };
 		E57283381D2ED117009117CC /* CryptoOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoOps.h; sourceTree = "<group>"; };
-		E5789F121D3D454B009670CF /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressManager.m; path = ../AddressManager.m; sourceTree = "<group>"; };
 		E5789F141D3D46E0009670CF /* AddressManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressManager.h; sourceTree = "<group>"; };
 		E57928AB1D34486000FF77D4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E57928AD1D34488400FF77D4 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -68,6 +67,8 @@
 		E5D4989D1D46F7FA00C605DB /* TransactionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransactionManager.h; sourceTree = "<group>"; };
 		E5EE67A61D304F5A00BEF981 /* NetworkOps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkOps.m; sourceTree = "<group>"; };
 		E5EE67A81D30650400BEF981 /* NetworkOps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkOps.h; sourceTree = "<group>"; };
+		E5F31DEE1D6388010033BF51 /* AddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressManager.m; sourceTree = "<group>"; };
+		E5F31DEF1D6388010033BF51 /* uECC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uECC.h; sourceTree = "<group>"; };
 		E5F7C7DA1D4590BB0064D06F /* CreateContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateContactViewController.m; sourceTree = "<group>"; };
 		E5F7C7DC1D4590C60064D06F /* CreateContactViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateContactViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,10 +103,11 @@
 		E5AB5E741D2C24660034B3EF /* BitcoinWallet */ = {
 			isa = PBXGroup;
 			children = (
+				E5F31DEE1D6388010033BF51 /* AddressManager.m */,
+				E5F31DEF1D6388010033BF51 /* uECC.h */,
 				E5270CD21D5D2E45005648C5 /* DEREncoder.h */,
 				E5270CD31D5D2E45005648C5 /* DEREncoder.m */,
 				E5270CD41D5D2E45005648C5 /* uECC.c */,
-				E5789F121D3D454B009670CF /* AddressManager.m */,
 				E5789F141D3D46E0009670CF /* AddressManager.h */,
 				E5AB5E781D2C24660034B3EF /* AppDelegate.h */,
 				E5AB5E791D2C24660034B3EF /* AppDelegate.m */,
@@ -236,11 +238,11 @@
 				E5F7C7DB1D4590BB0064D06F /* CreateContactViewController.m in Sources */,
 				E580F49D1D492DDC00500780 /* APINetworkOps.m in Sources */,
 				E5AB5E771D2C24660034B3EF /* main.m in Sources */,
-				E5789F131D3D454B009670CF /* AddressManager.m in Sources */,
 				E57928AC1D34486000FF77D4 /* MainViewController.m in Sources */,
 				E5C4B5451D46B6E50008EC1A /* SendTransactionViewController.m in Sources */,
 				E5C32C2A1D402CF40020486B /* AddressViewController.m in Sources */,
 				E5270CD51D5D2E45005648C5 /* DEREncoder.m in Sources */,
+				E5F31DF01D6388010033BF51 /* AddressManager.m in Sources */,
 				E5EE67A71D304F5A00BEF981 /* NetworkOps.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
