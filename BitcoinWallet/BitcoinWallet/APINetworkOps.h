@@ -18,6 +18,8 @@
 
 #import "AddressManager.h"
 #import "CryptoOps.h"
+#import <Foundation/Foundation.h>
+
 
 @interface APINetworkOps : NSObject
 

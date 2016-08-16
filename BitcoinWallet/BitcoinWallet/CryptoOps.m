@@ -15,27 +15,20 @@
 //******************************************************************************
 
 #import "CryptoOps.h"
-#import <Foundation/Foundation.h>
-#include <stdio.h>
-#include <string.h>
-#include "uECC.h"
-#include "DEREncoder.h"
-
 
 @implementation CryptoOps
 
 // sign privbytes with the private key of tag
 + (NSString*)signData:(NSString*)privBytes withAddress:(NSString*)tag {
     
-    // create BTC Key with bytes privBytes
-    // get the private key from the public key tag
+    // get char* representations of privkey
     AddressManager *addrMan = [AddressManager globalManager];
     NSDictionary *tagToPrivDict = [addrMan getTagPrivateKeyMapping];
     NSDictionary *tagToHexPub = [addrMan getTagToHexEncodedPubKeyMap];
 
+    // get correct byte representation of privkey
     NSString *privKey = [tagToPrivDict objectForKey:tag];
     NSData *privkeyAsBytes = [self hexEncodedStringToData:privKey];
-    
     NSData *correctedPrivBytes = [self hexEncodedHashToData:privBytes];
     
     // this needs a char to hex conversion
@@ -52,9 +45,7 @@
 	NSData* unsignedHash = [[NSData alloc]initWithBytes:result length:64];
 	signedHash = [DEREncoder derEncodeSignature:unsignedHash];
 
-    
     NSString *signedHasAsString = [self dataToHexEncodedString:signedHash];
-    
     return signedHasAsString;
 }
 
@@ -69,7 +60,7 @@
     
     // iterate over 32 bytes, sscanf 2 chars from byte array, process them
     for (i = 0 ; i < len; i++){
-        // scan for 2 unsigned chars (hhx) and interpret them as a hex number
+        // scan for 2 unsigned chars (hhx) and interpret them as hex
         sscanf(tmpPtr, "%2hhx",&byteArray[i]);
         // forward the string by 2 char
         tmpPtr = tmpPtr + 2;
@@ -88,12 +79,11 @@
     
     // iterate over 32 bytes, sscanf 2 chars from byte array, process them
     for (i = 0 ; i < 32; i++){
-        // scan for 2 unsigned chars (hhx) and interpret them as a hex number
+        // scan for 2 unsigned chars (hhx) and interpret them as hex
         sscanf(tmpPtr, "%2hhx",&byteArray[i]);
         // forward the string by 2 char
         tmpPtr = tmpPtr + 2;
     }
-
     
     NSData *correctDat = [[NSData alloc]initWithBytes:byteArray length:32];
     return correctDat;
@@ -105,11 +95,11 @@
     NSUInteger len = [test length];
     NSMutableString *toRet = [[NSMutableString alloc]initWithCapacity:(len * 2)];
     
+    // undo the above operation, interpret each 4 bits as a char
     const unsigned char *dataBytes = (const unsigned char*)[test bytes];
     for(int i = 0; i < len; i++){
         [toRet appendString:[NSString stringWithFormat:@"%02hhx",dataBytes[i]]];
     }
-
     return toRet;
     
 }

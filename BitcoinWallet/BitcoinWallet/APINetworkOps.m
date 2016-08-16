@@ -13,7 +13,7 @@
 // THE SOFTWARE.
 //
 //******************************************************************************
-#import <Foundation/Foundation.h>
+
 #import "APINetworkOps.h"
 
 @implementation APINetworkOps : NSObject
@@ -170,7 +170,7 @@ static NSString* apiAccessToken = @"YOUR_BLOCKCYPHER_TOKEN_HERE";
     
 }
 
-// ? 
+// Unused method? This is similar if not the same as above 
 + (NSString*)scanTXFor:(NSString*)hash {
     NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/txs/%@",hash];
     NSURL *apiURL =  [NSURL URLWithString:urlString];

@@ -14,7 +14,6 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #import "TransactionListViewController.h"
 
 @implementation TransactionListViewController

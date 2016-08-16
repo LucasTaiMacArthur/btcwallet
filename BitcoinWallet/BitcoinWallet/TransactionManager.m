@@ -13,7 +13,6 @@
 // THE SOFTWARE.
 //
 //******************************************************************************
-#import <Foundation/Foundation.h>
 #include "TransactionManager.h"
 
 @implementation TransactionManager

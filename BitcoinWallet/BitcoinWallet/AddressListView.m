@@ -17,11 +17,10 @@
 
 @implementation AddressListView
 
-static UITextField *winNameField;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // hide the status bar only in UWP
 	#ifdef WINOBJC
 	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
 	#endif
@@ -32,6 +31,7 @@ static UITextField *winNameField;
     
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
+    // take into account no status bar on UWP application
     #ifdef WINOBJC
 	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
 	#endif
@@ -54,6 +54,7 @@ static UITextField *winNameField;
     
     // create tableview
     CGRect mainTableFrame = CGRectMake(0, 64, frameWidth, frameHeight-64);
+    // take into account no status bar on UWP application
 	#ifdef WINOBJC
 	mainTableFrame = CGRectMake(0, 44, frameWidth, frameHeight-44);
 	#endif
@@ -67,12 +68,12 @@ static UITextField *winNameField;
     
 }
 
-// count the number of rows in the table
+// table rows = number of addresses stored
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_tableData count];
 }
 
-// get the total value of the address
+// synchronously get the value stored at the address, display it as the cell tag
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *contactCellIdent = @"contactCell";
     UITableViewCell *contactCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contactCellIdent];
@@ -85,7 +86,7 @@ static UITextField *winNameField;
     return contactCell;
 }
 
-// select the 
+// on press, show a view controller with the relevant address
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
     // get the row
     UITableViewCell *cellSelected = [tableView cellForRowAtIndexPath:indexPath];
@@ -101,6 +102,7 @@ static UITextField *winNameField;
     
 }
 
+// on press, give a popup which allows a user to choose a new name for a new address
 - (void)addNewAddressPressed {
     
 	// UIAlertController in ios
@@ -122,7 +124,7 @@ static UITextField *winNameField;
         // just quietly exit
     }];
     [newAddress addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Adress Name";
+        textField.placeholder = @"Address Name";
     }];
     [newAddress addAction:cancel];
     [newAddress addAction:submit];
@@ -175,13 +177,14 @@ static UITextField *winNameField;
     
 }
 
-
+// exit the vc
 - (void)backButtonPressed {
     [self dismissViewControllerAnimated:TRUE completion:^{
         // nil
     }];
 }
 
+// exit the vc
 - (void)AddressSubmitPressed {
     [self dismissViewControllerAnimated:TRUE completion:^{
         // nil
@@ -207,8 +210,9 @@ static UITextField *winNameField;
 	alert.content = contentText;
 
 	[alert showAsyncWithSuccess:^(WXCContentDialogResult success) {
+        // not required
 	} failure:^(NSError* failure) {
-		// nope
+		// not handled
 	}];
 
 	#endif

@@ -14,12 +14,11 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #include "NetworkOps.h"
 
 @implementation NetworkOps : NSObject 
 
-// get string balance of 
+// get string balance of addr
 + (NSString *)getAddressBalance: (NSString *)address changeWithLabel:(UILabel *)label {
     
     NSString *urlString = [NSString stringWithFormat:@"https:/www.blockexplorer.com/api/addr/%@/balance",address];
@@ -39,6 +38,7 @@
     
 }
 
+// get double balane of addr
 + (double)getBalanceSimple: (NSString *)address {
     
     // set up NS
@@ -68,7 +68,7 @@
 
 
 
-
+// get image data from qr api
 + (NSData *)getAddressQRCode: (NSString *)address  {
     
     NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&size=300x300",address];
@@ -94,6 +94,7 @@
 + (void)myCallback:(NSInteger)test {
 }
 
+// get balance information from dictionary where values are address pubkeys
 + (double)returnBalanceFromAddresses:(NSDictionary*)keypairDict {
     
 	// enumerate all addresses

@@ -16,6 +16,9 @@
 #ifndef ContactManager_h
 #define ContactManager_h
 
+#import <Foundation/Foundation.h>
+
+
 @interface ContactManager : NSObject
 + (id)globalManager;
 - (int)addKeyPair:(NSString*)toAdd;

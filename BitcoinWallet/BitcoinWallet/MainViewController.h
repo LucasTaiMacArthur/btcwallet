@@ -25,6 +25,13 @@
 #import "ContactManager.h"
 #import "CreateContactViewController.h"
 #import "ContactViewController.h"
+#import <Foundation/Foundation.h>
+
+#ifdef WINOBJC
+#import <UWP/WindowsUIXamlControls.h>
+#import <UWP/WindowsMediaCapture.h>
+#import <UWP/WindowsDevicesEnumeration.h>
+#endif
 
 @interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -34,7 +34,7 @@
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
 
-    // add navigation bar
+    // add navigation bar, account for no windows status bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
 	#ifdef WINOBJC
 	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
@@ -75,14 +75,11 @@
     
 	// async get the qr image
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
-    
     dispatch_async(balanceQueue, ^{
-        // get the image data
+        // get the image data, set image, update view
         NSData *imageData = [NetworkOps getAddressQRCode:_qrCode];
-        // set image
         UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
         [_qrImage setImage:toAdd];
-        // update the view hierarchy
         [_qrImage setNeedsDisplay];
         
     });
@@ -92,6 +89,7 @@
     
 }
 
+// dismiss current view
 - (void)backButtonPressed {
     [self dismissViewControllerAnimated:TRUE completion:^{
         // nil

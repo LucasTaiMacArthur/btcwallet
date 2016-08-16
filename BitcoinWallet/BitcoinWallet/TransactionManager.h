@@ -17,6 +17,7 @@
 #ifndef TransactionManager_h
 #define TransactionManager_h
 
+#import <Foundation/Foundation.h>
 
 @interface TransactionManager : NSObject
 

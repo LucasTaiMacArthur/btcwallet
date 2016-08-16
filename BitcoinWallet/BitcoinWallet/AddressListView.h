@@ -24,6 +24,7 @@
 #include "CryptoOps.h"
 #import "NetworkOps.h"
 #import "APINetworkOps.h"
+
 // import ui/notifcations for the toast if we are on a windows system
 #ifdef WINOBJC
 #import <UWP/WindowsUIXamlControls.h>
@@ -38,8 +39,6 @@
 @property (atomic,strong) UITableView *mainTable;
 @property (atomic,strong) NSArray *tableData;
 @property (atomic,strong) NSDictionary *pairDict;
-
-
 
 @end
 

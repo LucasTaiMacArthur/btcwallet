@@ -18,6 +18,8 @@
 #define NetworkOps_h
 
 #import "MainViewController.h"
+#import <Foundation/Foundation.h>
+
 
 @interface NetworkOps : NSObject
 @property (atomic) int threadCount;

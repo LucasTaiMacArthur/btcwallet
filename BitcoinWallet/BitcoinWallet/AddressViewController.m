@@ -14,11 +14,11 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #import "AddressViewController.h"
 
 @implementation AddressViewController
 
+// Class level method to create an AddressVC with the right data
 + (id)initWithName:(NSString*)name andAddress:(NSString*)address {
     AddressViewController *toRet = [[AddressViewController alloc] init];
     toRet.addressName = name;
@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // no status bar in UWP
 	#ifdef WINOBJC
 	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
 	#endif
@@ -38,12 +39,11 @@
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
     
-    // get name from bundle
-    
     
     // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
-	#ifdef WINOBJC
+	// lack of status bar in UWP
+    #ifdef WINOBJC
 	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
 	#endif
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
@@ -82,14 +82,11 @@
     
     // asynchronously get the QR Image
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
-    
     dispatch_async(balanceQueue, ^{
-        // get the image data
+        // get the image data, set image, update view
         NSData *imageData = [NetworkOps getAddressQRCode:_address];
-        // set image
         UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
         [_qrImage setImage:toAdd];
-        // update the view hierarchy
         [_qrImage setNeedsDisplay];
         
     });
@@ -100,6 +97,7 @@
 }
 
 
+// dismiss the vc
 - (void)backButtonPressed {
     [self dismissViewControllerAnimated:TRUE completion:^{
         // nil

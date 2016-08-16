@@ -14,8 +14,14 @@
 //
 //******************************************************************************
 
-// this doesn't work in iOS
-#import <Foundation/Foundation.h>
+/*
+ 
+ This class primarily houses a view with a QR scanner built from the
+ AVCapture and related classes. These classes are not currently implemented
+ in Islandwood and thus won't be called in the UWP solution
+ 
+ */
+
 #import "CreateContactViewController.h"
 
 @implementation CreateContactViewController

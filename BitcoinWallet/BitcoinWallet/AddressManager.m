@@ -13,7 +13,6 @@
 // THE SOFTWARE.
 //
 //******************************************************************************
-#import <Foundation/Foundation.h>
 #include "AddressManager.h"
 
 
@@ -23,6 +22,7 @@
 static AddressManager *globalManager = nil;
 
 
+// global singleton manager
 + (id)globalManager {
     if (globalManager == nil){
         globalManager = [[AddressManager alloc] init];
@@ -34,9 +34,9 @@ static AddressManager *globalManager = nil;
 // create dummy test data
 - (void)createKeyPairsWithDummyData {
     NSString *line1 = [[NSString alloc]initWithFormat:@"bit1,1JdJQftq3kQRTBVBMRJ4dcZe5yBJCuz6MR\n"];
-    NSString *tag1 = [[NSString alloc] initWithFormat:@"TEST1|"];
+    NSString *tag1 = [[NSString alloc] initWithFormat:@"TEST1-"];
     NSString *line2 = [[NSString alloc]initWithFormat:@"bit2,1wuyDWpAzcz84XBWB5WLzHtHxnHb5Kqwo\n"];
-    NSString *tag2 = [[NSString alloc] initWithFormat:@"TEST2|"];
+    NSString *tag2 = [[NSString alloc] initWithFormat:@"TEST2-"];
     [self addKeyPair:line1 withTag:tag1];
     [self addKeyPair:line2 withTag:tag2];
 }

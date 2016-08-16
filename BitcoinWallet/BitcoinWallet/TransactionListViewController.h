@@ -17,6 +17,7 @@
 #ifndef TransactionListViewController_h
 #define TransactionListViewController_h
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "APINetworkOps.h"
 #import "TransactionManager.h"
 

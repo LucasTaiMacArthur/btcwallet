@@ -14,10 +14,20 @@
 //
 //******************************************************************************
 
+/*
+ 
+ This class primarily houses a view with a QR scanner built from the
+ AVCapture and related classes. These classes are not currently implemented
+ in Islandwood and thus won't be called in the UWP solution
+ 
+ */
+
 #ifndef CreateContactViewController_h
 #define CreateContactViewController_h
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "ContactManager.h"
+
 @import AVFoundation;
 
 @interface CreateContactViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate>

@@ -1,5 +1,5 @@
 //
-//  Built from GMEllipticCurveCrypto+hash.m
+//  Found at ricmoo/GMEllipticCurveCrypto on github
 //
 //  BSD 2-Clause License
 //

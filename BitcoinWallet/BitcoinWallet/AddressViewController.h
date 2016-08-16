@@ -16,8 +16,10 @@
 
 #ifndef AddressViewController_h
 #define AddressViewController_h
-#import "NetworkOps.h"
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "NetworkOps.h"
+
 
 @interface AddressViewController : UIViewController
 

@@ -14,15 +14,7 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #import "SendTransactionViewController.h"
-
-// import ui/notifcations for the toast if we are on a windows system
-#ifdef WINOBJC
-#import <UWP/WindowsUINotifications.h>
-#import <UWP/WindowsDataXmlDom.h>
-#import <UWP/WindowsUIXamlControls.h>
-#endif
 
 @implementation SendTransactionViewController
 
@@ -289,7 +281,7 @@
         
         // error check (literally check for errors in the resturned object
         if ( [finalTX objectForKey:@"errors"]) {
-            // if errors, fail quiet *for now*
+            // if errors, fail quiet
             return;
         
         } else {
@@ -359,6 +351,8 @@
         // nil
     }];
 }
+
+// to ensure proper view placement under UWP frames are updated on drawing
 
 #ifdef WINOBJC
 - (CGRect)calcContactPickerFrame {

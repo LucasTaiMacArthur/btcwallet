@@ -14,7 +14,6 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #include "ContactManager.h"
 
 @implementation ContactManager : NSObject

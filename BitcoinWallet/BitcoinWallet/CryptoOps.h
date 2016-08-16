@@ -18,12 +18,12 @@
 #define CryptoOps_h
 
 #import <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
+#include <stdio.h>
+#include <string.h>
+#include "uECC.h"
 #import "AddressManager.h"
-
-#ifndef WINOBJC
-#endif
-
-
+#include "DEREncoder.h"
 
 @interface CryptoOps : NSObject
 

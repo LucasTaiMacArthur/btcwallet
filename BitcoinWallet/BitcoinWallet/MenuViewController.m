@@ -31,10 +31,12 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     
     self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
     
+    // no status bar on UWP
 	#ifdef WINOBJC
 	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
 	#endif
 
+    // payment button
     self.makePaymentButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.makePaymentButton.layer.borderWidth = 1;
     self.makePaymentButton.layer.cornerRadius = 15;
@@ -53,6 +55,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     self.makePaymentButton.titleLabel.textColor = [UIColor blackColor];
     [self.view addSubview:self.makePaymentButton];
     
+    // addresses button
     self.myAddressesButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.myAddressesButton.layer.borderWidth = 1;
     self.myAddressesButton.layer.cornerRadius = 15;
@@ -69,11 +72,11 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                      forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myAddressesButton];
     
+    // contacts button
     self.myContactsButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.myContactsButton.layer.borderWidth = 1;
     self.myContactsButton.layer.cornerRadius = 15;
     self.myContactsButton.clipsToBounds = TRUE;
-    
     self.myContactsButton.backgroundColor = [UIColor colorWithRed:(0xf5/255.0f) green:(0xd7/255.0f) blue:(0x6e/255.0f) alpha:1.0];
     [self.myContactsButton setTitle:kContactsButtonString
                            forState:UIControlStateNormal];
@@ -86,6 +89,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                     forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.myContactsButton];
     
+    // transactions button
     self.myTransactionsButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.myTransactionsButton.layer.borderWidth = 1;
     self.myTransactionsButton.layer.cornerRadius = 15;
@@ -110,7 +114,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                              };
     
     // These constraints display well on Windows UWP devices
-#ifdef WINOBJC
+    #ifdef WINOBJC
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-300-|"
                                                                       options:0
@@ -144,9 +148,9 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-#endif
+    #endif
     // These constraints display well on iOS
-#ifndef WINOBJC
+    #ifndef WINOBJC
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[paymentButton]-350-|"
                                                                       options:0
@@ -186,10 +190,10 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
                                                                       options:0
                                                                       metrics:metrics
                                                                         views:views]];
-#endif
+    #endif
     
+    // async get balance and update
     dispatch_queue_t balanceQueue = dispatch_queue_create("Balance Queue",NULL);
-    
     dispatch_async(balanceQueue, ^{
 		#ifndef WINOBJC
         // get addresses
@@ -205,6 +209,7 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
 		#endif
     });
     
+    // strange crashes on background thread under UWP
 	#ifdef WINOBJC
 	// get addresses
     NSDictionary *addresses = [[AddressManager globalManager] getKeyPairs];
@@ -221,6 +226,8 @@ static NSString *kTransactionsButtonString = @"Past Transactions";
     
     
 }
+
+// The following methods handle button presses and display the relevant VC
 
 - (void)addressButtonPressed {
     AddressListView *addrViewCon = [[[AddressListView alloc] init] retain];

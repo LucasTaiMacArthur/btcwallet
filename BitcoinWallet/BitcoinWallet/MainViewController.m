@@ -14,13 +14,8 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
 #import "MainViewController.h"
-#ifdef WINOBJC
-#import <UWP/WindowsUIXamlControls.h>
-#import <UWP/WindowsMediaCapture.h>
-#import <UWP/WindowsDevicesEnumeration.h>
-#endif
+
 
 @implementation MainViewController
 
@@ -29,6 +24,7 @@ static NSDictionary *contacts;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // UWP has no status bar
 	#ifdef WINOBJC
 	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
 	#endif
@@ -74,12 +70,12 @@ static NSDictionary *contacts;
     
 }
 
-// return number of rows
+// number of rows = number of contats
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_tableData count];
 }
 
-// return cell with contact
+// return cell with contact name
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *contactCellIdent = @"contactCell";
     UITableViewCell *contactCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:contactCellIdent];
@@ -87,7 +83,7 @@ static NSDictionary *contacts;
     return contactCell;
 }
 
-// select contact
+// select contact, create VC with the relevant info and show
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
     // get the row
     UITableViewCell *cellSelected = [tableView cellForRowAtIndexPath:indexPath];
@@ -109,7 +105,7 @@ static NSDictionary *contacts;
     }];
 }
 
-// different add methods for different architectures 
+// on add, iOS will show qr scanner, UWP does not support and show text entry 
 - (void)addButtonPressed {
     
 	#ifndef WINOBJC

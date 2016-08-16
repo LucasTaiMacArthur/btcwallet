@@ -17,6 +17,9 @@
 #ifndef AddressManager_h
 #define AddressManager_h
 
+#import <Foundation/Foundation.h>
+
+
 @interface AddressManager : NSObject
 
 

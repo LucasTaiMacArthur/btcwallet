@@ -17,11 +17,19 @@
 #ifndef SendTransactionViewController_h
 #define SendTransactionViewController_h
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "ContactManager.h"
 #import "AddressManager.h"
 #import "TransactionManager.h"
 #import "APINetworkOps.h"
 #import "CryptoOps.h"
+
+// import ui/notifcations for the toast if we are on a windows system
+#ifdef WINOBJC
+#import <UWP/WindowsUINotifications.h>
+#import <UWP/WindowsDataXmlDom.h>
+#import <UWP/WindowsUIXamlControls.h>
+#endif
 
 @interface SendTransactionViewController : UIViewController <UIPickerViewDelegate,UIPickerViewDataSource>
 
