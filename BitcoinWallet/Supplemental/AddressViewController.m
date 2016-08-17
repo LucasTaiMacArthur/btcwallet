@@ -14,35 +14,37 @@
 //
 //******************************************************************************
 
-#import <Foundation/Foundation.h>
-#import "ContactViewController.h"
+#import &lt;Foundation/Foundation.h&gt;
+#import "AddressViewController.h"
 
-@implementation ContactViewController
+@implementation AddressViewController
 
-// create contact with view controller
-+ (id)initWithName:(NSString*)nameStr andAddress:(NSString*)qrStr {
-    ContactViewController *cvc = [[ContactViewController alloc] init];
-    cvc.name = nameStr;
-    cvc.qrCode = qrStr;
-    return cvc;
++ (id)initWithName:(NSString*)name andAddress:(NSString*)address {
+    AddressViewController *toRet = [[AddressViewController alloc] init];
+    toRet.addressName = name;
+    toRet.address = address;
+    return toRet;
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-	self.view.backgroundColor = [UIColor colorWithRed:(210.0/255.0f) green:(215.0/255.0f) blue:(211.0/255.0f) alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-
-    // add navigation bar, account for no windows status bar
+    
+    // get name from bundle
+    
+    
+    // add navigation bar
     _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 20, frameWidth, 44)];
-	#ifdef WINOBJC
-	_navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, frameWidth, 44)];
-	#endif
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
     
     // add navbar item with buttons
-    UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:_name];
+    
+    UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:_addressName];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     staticItem.leftBarButtonItem = backButton;
     [_navBar pushNavigationItem:staticItem animated:NO];
@@ -73,23 +75,55 @@
     
     
     
-	// async get the qr image
+    
     dispatch_queue_t balanceQueue = dispatch_queue_create("ImageQueue",NULL);
+    
     dispatch_async(balanceQueue, ^{
-        // get the image data, set image, update view
-        NSData *imageData = [NetworkOps getAddressQRCode:_qrCode];
-        UIImage *toAdd = [[UIImage alloc] initWithData:imageData];
-        [_qrImage setImage:toAdd];
-        [_qrImage setNeedsDisplay];
+        
+        // our BFTASK, if successful, will return the UIImage needed for _qrImage;
+        [[self getImageData:_address] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            if (t.error){
+                // task failed
+                return nil;
+            }else if (t.isCancelled) {
+                // task also failed
+                return nil;
+            } else {
+                // task completed, update image, request redisplay
+                [_qrImage setImage:t.result];
+                [_qrImage setNeedsDisplay];
+                return nil;
+            }
+            
+        }];
         
     });
     
-
+    
     
     
 }
 
-// dismiss current view
+- (BFTask*)getImageData:(NSString*)addr {
+    
+    BFTaskCompletionSource *success = [BFTaskCompletionSource taskCompletionSource];
+    NSData *imageData = [NetworkOps getAddressQRCode:_address];
+    // failure condition
+    if (imageData == NULL){
+        NSError *defErr = [NSError errorWithDomain:NSURLErrorDomain code:999 userInfo:nil];
+        [success setError:defErr];
+        return success.task;
+    }
+    // set image
+    UIImage *toAdd = [[[UIImage alloc] initWithData:imageData] retain];
+    [success setResult:toAdd];
+    return success.task;
+    
+}
+
+
+
+
 - (void)backButtonPressed {
     [self dismissViewControllerAnimated:TRUE completion:^{
         // nil

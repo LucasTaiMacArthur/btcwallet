@@ -14,24 +14,23 @@
 //
 //******************************************************************************
 
-#ifndef TransactionListViewController_h
-#define TransactionListViewController_h
+#ifndef AddressViewController_h
+#define AddressViewController_h
+#import "NetworkOps.h"
+#import "Bolts.h"
 #import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import "APINetworkOps.h"
-#import "TransactionManager.h"
 
-@interface TransactionListViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface AddressViewController : UIViewController
 
-@property (strong,nonatomic) UINavigationBar* navBar;
-@property (atomic,strong) UITableView *mainTable;
-@property (atomic,strong) NSArray *tableData;
-@property (atomic,strong) NSSet *pairDict;
+@property (strong,atomic) UINavigationBar *navBar;
+@property (strong,atomic) UIImageView *qrImage;
+@property (strong,atomic) UILabel *nameLabel;
+@property (strong,nonatomic) NSString *addressName;
+@property (strong,nonatomic) NSString *address;
 
-@property (atomic,strong) NSMutableArray *toAddr;
-@property (atomic,strong) NSMutableArray *fromAddr;
-@property (atomic,strong) NSMutableArray *amount;
++ (id)initWithName:(NSString*)name andAddress:(NSString*)address;
+
 
 @end
 
-#endif /* TransactionListViewController_h */
+#endif /* AddressViewController_h */

@@ -1,18 +1,29 @@
+//******************************************************************************
 //
-//  TransactionListViewController.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/30/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
-#import <Foundation/Foundation.h>
 #import "TransactionListViewController.h"
 
 @implementation TransactionListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+	#ifdef WINOBJC
+	[[UIApplication sharedApplication] setStatusBarHidden:YES]; // Deprecated in iOS
+	#endif
     
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
@@ -24,7 +35,7 @@
     _navBar.barTintColor = [UIColor colorWithRed:(0xc5/255.0f) green:(0xef/255.0f) blue:(0xf7/255.0f) alpha:1.0];
     
     // add navbar item with buttons
-    UINavigationItem *navBar = [[UINavigationItem alloc] initWithTitle:@"Transactions"];
+    UINavigationItem *navBar = [[UINavigationItem alloc] initWithTitle:@"Recent Transactions"];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     navBar.leftBarButtonItem = backButton;
     [_navBar pushNavigationItem:navBar animated:NO];
@@ -34,7 +45,7 @@
     // dummy data
     TransactionManager *transactionMan = [TransactionManager globalManager];
     //[transactionMan createKeyPairsWithDummyData];
-    _pairDict = [transactionMan getTransactionSet];
+    _pairDict = [[transactionMan getTransactionSet] retain];
     _tableData = [[NSArray arrayWithArray:[_pairDict allObjects]] retain];
 
     
@@ -76,15 +87,18 @@
     
     // build the dict, pull out confirmations/amnt
     NSDictionary *txDat = [APINetworkOps getTXHashInfo:txHash];
-    NSDictionary *tx = [txDat objectForKey:@"tx"];
-    NSNumber *confirmations = [tx objectForKey:@"confirmations"];
     
-    NSString *confirmed = @"Unconfirmed";
-    if ([confirmations integerValue] > 0){
-        confirmed = @"Confirmed";
+    NSNumber *confirmations = [txDat objectForKey:@"confirmed"];
+    NSString *confirmed = @"UNCONFIRMED";
+    if (confirmations != NULL){
+        confirmed = @"CONFIRMED";
     }
     
-    NSString *finalStrToDisplay = [NSString stringWithFormat:@"To: %@\nFrom: %@\nAmount: XXX\n%@",contact,address,confirmed];
+    NSString *value = [txDat objectForKey:@"total"];
+    double cVal = [value doubleValue];
+    double cValBTC = (cVal / 100000000.0f);
+    
+    NSString *finalStrToDisplay = [NSString stringWithFormat:@"To: %@\nFrom: %@\nAmount: %3.2f\n%@",contact,address,cValBTC,confirmed];
     contactCell.textLabel.text = finalStrToDisplay;
     
     

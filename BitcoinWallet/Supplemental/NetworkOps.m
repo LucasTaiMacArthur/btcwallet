@@ -14,11 +14,12 @@
 //
 //******************************************************************************
 
+
+#import &lt;Foundation/Foundation.h&gt;
 #include "NetworkOps.h"
 
 @implementation NetworkOps : NSObject 
 
-// get string balance of addr
 + (NSString *)getAddressBalance: (NSString *)address changeWithLabel:(UILabel *)label {
     
     NSString *urlString = [NSString stringWithFormat:@"https:/www.blockexplorer.com/api/addr/%@/balance",address];
@@ -30,77 +31,102 @@
             to_ret = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSString *str = [NSString stringWithFormat:@"Address Balance: %@",to_ret];
             label.text = str;
+            
+            
             }
         }
     ];
     [tsk resume];
-	return to_ret;
+    
+    
+    
+    return to_ret;
     
 }
 
-// get double balane of addr
 + (double)getBalanceSimple: (NSString *)address {
     
     // set up NS
     NSString *urlString = [NSString stringWithFormat:@"https://api.blockcypher.com/v1/btc/test3/addrs/%@/balance",address];
     NSURL *apiURL =  [NSURL URLWithString:urlString];
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:defaultConfig];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLRequest *req = [NSURLRequest requestWithURL:apiURL];
+    
     
     __block bool returned = FALSE;
-    __block double strVal = 0;
-    
-    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:apiURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if(data){
-            NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:data options:nil error:nil];
-            // the data we want is at /final_balance
-            NSNumber *final_balance = [jsonData valueForKey:@"final_balance"];
-            strVal = [final_balance doubleValue];
-            returned = TRUE;
-        }
+    __block int strVal = 0;
+    NSURLSessionDataTask *dataTsk = [sessionManager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        NSData *dat = (NSData*)responseObject;
+        NSDictionary *jsonData = (NSDictionary*)[NSJSONSerialization JSONObjectWithData:dat options:nil error:nil];
+        // the data we want is at /final_balance
+        NSNumber *final_balance = [jsonData valueForKey:@"final_balance"];
+        strVal = [final_balance intValue];
+        returned = TRUE;
     }];
-
     
-    [tsk resume];
-    while (!returned) {}
+    
+    
+    [dataTsk resume];
+    
+    while (!returned) {
+        // busy wait
+    }
+    
     return strVal;
-    
+
     
 }
 
 
 
-// get image data from qr api
 + (NSData *)getAddressQRCode: (NSString *)address  {
     
-    NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&size=300x300",address];
+    NSString *apiCall = [NSString stringWithFormat:@"https://api.qrserver.com/v1/create-qr-code/?data=%@&amp;size=300x300",address];
     NSURL *url = [NSURL URLWithString:apiCall];
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:defaultConfig];
+    sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    
     __block NSData *to_ret = [[NSData alloc] init];
     __block bool returned = FALSE;
     
-    NSURLSessionDataTask *tsk = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if(data){
-            to_ret = [data retain];
-            returned = TRUE;
-        }
+    NSURLSessionDataTask *dataTsk = [sessionManager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        to_ret = [(NSData*)responseObject retain];
+        returned = TRUE;
     }];
-    [tsk resume];
+    
+    
+
+    [dataTsk resume];
     
     while (!returned) {
         // busy wait
     }
+    
+    
+    
     return to_ret;
     
 }
 
 + (void)myCallback:(NSInteger)test {
+    printf("Got Callback was: %li\n",(long)test);
 }
 
-// get balance information from dictionary where values are address pubkeys
-+ (double)returnBalanceFromAddresses:(NSDictionary*)keypairDict {
++ (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict {
     
-	// enumerate all addresses
-    NSArray<NSString *> *vals = [keypairDict allValues];
+    
+    
+    // enumerate all addresses
+    NSArray&lt;NSString *&gt; *vals = [keypairDict allValues];
     __block long count = [vals count];
-    __block long balance = 0;
+    __block double balance = 0;
     
     for(NSString *val in vals){
         // each ret decrements the counter, increment the balance
@@ -109,9 +135,10 @@
         count--;
     }
     
-    // busy wait while count is zero
-    while(count > 0){}
-    return balance;
+    
+    NSUInteger ret = balance;
+    
+    return ret;
 }
 
 

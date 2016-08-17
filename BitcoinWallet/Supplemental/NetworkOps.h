@@ -14,24 +14,22 @@
 //
 //******************************************************************************
 
-#ifndef TransactionListViewController_h
-#define TransactionListViewController_h
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import "APINetworkOps.h"
-#import "TransactionManager.h"
 
-@interface TransactionListViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+#ifndef NetworkOps_h
+#define NetworkOps_h
 
-@property (strong,nonatomic) UINavigationBar* navBar;
-@property (atomic,strong) UITableView *mainTable;
-@property (atomic,strong) NSArray *tableData;
-@property (atomic,strong) NSSet *pairDict;
+#import "MainViewController.h"
+#import "AFNetworking.h"
 
-@property (atomic,strong) NSMutableArray *toAddr;
-@property (atomic,strong) NSMutableArray *fromAddr;
-@property (atomic,strong) NSMutableArray *amount;
+@interface NetworkOps : NSObject
+@property (atomic) int threadCount;
+
++ (NSString*)getAddressBalance:(NSString *)address changeWithLabel:(UILabel *)label;
++ (NSData*)getAddressQRCode:(NSString *)address;
++ (double)getBalanceSimple: (NSString *)address;
++ (NSUInteger)returnBalanceFromAddresses:(NSDictionary*)keypairDict;
 
 @end
 
-#endif /* TransactionListViewController_h */
+
+#endif /* NetworkOps_h */

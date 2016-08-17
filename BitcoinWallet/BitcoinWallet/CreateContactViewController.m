@@ -1,37 +1,49 @@
+//******************************************************************************
 //
-//  CreateContactViewController.m
-//  BitcoinWallet
+// Copyright (c) 2016 Microsoft Corporation. All rights reserved.
 //
-//  Created by Lucas Tai-MacArthur on 7/24/16.
+// This code is licensed under the MIT License (MIT).
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
+//******************************************************************************
 
-#import <Foundation/Foundation.h>
+/*
+ 
+ This class primarily houses a view with a QR scanner built from the
+ AVCapture and related classes. These classes are not currently implemented
+ in Islandwood and thus won't be called in the UWP solution
+ 
+ */
+
 #import "CreateContactViewController.h"
 
 @implementation CreateContactViewController
 
 
 - (void)viewDidLoad{
+	
+	#ifndef WINOBJC
     [super viewDidLoad];
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
-
     CGFloat frameWidth = self.view.frame.size.width;
     CGFloat frameHeight = self.view.frame.size.height;
-
+    
     
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
     AVCaptureDevice *frontCam = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *err = nil;
     AVCaptureDeviceInput *camInput = [AVCaptureDeviceInput deviceInputWithDevice:frontCam error:&err];
-    
     // start the capture session
     [captureSession addInput:camInput];
     
     dispatch_queue_t delegateQ = dispatch_queue_create("delQ",NULL);
-
-    
     // attach metadata output to the session
     AVCaptureMetadataOutput *qrOut = [[AVCaptureMetadataOutput alloc] init];
     [captureSession addOutput:qrOut];
@@ -44,7 +56,6 @@
     
     
     // add navbar item with buttons
-    
     UINavigationItem *staticItem = [[UINavigationItem alloc] initWithTitle:@"Scan Contact QR"];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:nil action:@selector(backButtonPressed)];
     staticItem.leftBarButtonItem = backButton;
@@ -59,8 +70,8 @@
     [self.instructionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.instructionLabel setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:self.instructionLabel];
-
-
+    
+    
     
     // add the imageview with callback
     _displayView = [[AVCaptureVideoPreviewLayer alloc] initWithSession:captureSession];
@@ -80,10 +91,10 @@
     
     [_displayView setFrame:_previewContainer.frame];
     [self.view.layer addSublayer:_displayView];
-
-
-
-
+    
+    
+    
+    
     
     // set platform agnostic constraints
     NSDictionary *metrics = @{ @"pad": @80.0, @"margin": @40, @"paymentButtonHeight": @150};
@@ -103,22 +114,22 @@
     
     // start the camera
     [captureSession startRunning];
-
-
-
+    
+    #endif
+    
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     
+	#ifndef WINOBJC
+
     // check for empty array
     if(metadataObjects.count == 0){
         return;
     }
     AVMetadataMachineReadableCodeObject *qr = [metadataObjects objectAtIndex:0];
     if (qr.type == AVMetadataObjectTypeQRCode) {
-        NSString *addrString = qr.stringValue;
-        printf("THE QR CODE READ %s\n",[qr.stringValue UTF8String]);
-        
+        NSString *addrString = qr.stringValue;        
         UIAlertController *newAddress = [UIAlertController alertControllerWithTitle:@"Create Contact" message:@"Provide a name for this contact" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             // get string pair
@@ -148,11 +159,13 @@
         [self presentViewController:newAddress animated:YES completion:^{
             // nothing
         }];
-
+        
         
         
     }
     
+	#endif
+
 }
 
 - (void)backButtonPressed {
